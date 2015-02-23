@@ -2,6 +2,9 @@ For the project as a whole:
 
 1. We need task / bug tracking within the week!
 
+For Sprite:
+
+1. Migrate sound to another class while keeping the same functionality.
 
 For Event Manager:
 
