@@ -1,0 +1,17 @@
+For the project as a whole:
+
+1. We need task / bug tracking within the week!
+
+
+For Event Manager:
+
+1. EventManager::Update() could theoritically run forever if there are enough events.
+
+StartEventProcessing is called in the while loop that checks for events.  
+If more events occurs before the processing finishes, the while loop will continue. 
+A timer could stop the update at some point.
+
+2. EventManager::StartEventProcessing() might limit the types of events that can be dispatched.
+
+What if an object wants to know if ANY mouse button was pressed rather than a specific one?
+
