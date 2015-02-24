@@ -1,14 +1,13 @@
 #pragma once
 
 #include "SDL.h"
-#include "SDL_mixer.h"
 #include <vector>
 #include <map>
 
 class Sprite
 {
 public:
-	Sprite(int width, int height, SDL_Renderer* ren, Mix_Music* music = nullptr);
+	Sprite(int width, int height, SDL_Renderer* ren);
 	~Sprite(void);
 
 	void setPos(int x, int y);
@@ -18,7 +17,7 @@ public:
 	int getY();
 
 	// makeFrame returns the unique index of the frame
-	int makeFrame(SDL_Texture* texture, int x, int y, Mix_Chunk* soundEffect = nullptr);
+	int makeFrame(SDL_Texture* texture, int x, int y);
 
 	// addFrameToSequence returns the number of frames in the sequence after the add
 	int addFrameToSequence(std::string seqName, int frameIndex);
@@ -35,14 +34,12 @@ private:
 	int width, height;
 	int currX, currY;		// the coordinates of the sprite's upper left hand corner relative to the window
 	SDL_Renderer* renderer;
-	Mix_Music* music;
 
 	struct frame
 	{
 		SDL_Texture* texture;
 		int x;
 		int y;
-		Mix_Chunk* soundEffect;
 	};
 	std::vector<frame> frames;
 

@@ -23,25 +23,15 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
 	renderTexture(tex, ren, dst, clip);
 }
 
-Sprite::Sprite(int width, int height, SDL_Renderer* ren, Mix_Music* music){
+Sprite::Sprite(int width, int height, SDL_Renderer* ren){
 	this->width = width;
 	this->height = height;
 	renderer = ren;
-	this->music = music;
-	if (Mix_PlayingMusic() == 0){
-		Mix_PlayMusic(this->music, -1);
-	}
 }
 
 Sprite::~Sprite(void){
 	for (unsigned int i = 0; i < frames.size(); ++i){
 		SDL_DestroyTexture(frames[i].texture);
-		if (frames[i].soundEffect != nullptr){
-			Mix_FreeChunk(frames[i].soundEffect);
-		}
-	}
-	if (music != nullptr){
-		Mix_FreeMusic(music);
 	}
 }
 
@@ -66,12 +56,11 @@ int Sprite::getY(){
 	return currY;
 }
 
-int Sprite::makeFrame(SDL_Texture* texture, int x, int y, Mix_Chunk* soundEffect){
+int Sprite::makeFrame(SDL_Texture* texture, int x, int y){
 	frame f;
 	f.texture = texture;
 	f.x = x;
 	f.y = y;
-	f.soundEffect = soundEffect;
 	frames.push_back(f);
 	return frames.size() - 1;
 }
@@ -88,9 +77,6 @@ void Sprite::show(int frameIndex){
 	clip.w = width;
 	clip.h = height;
 	renderTexture(frames[frameIndex].texture, renderer, currX, currY, &clip);
-	if (frames[frameIndex].soundEffect != nullptr){
-		Mix_PlayChannel(-1, frames[frameIndex].soundEffect, 0);
-	}
 }
 
 void Sprite::show(std::string sequence){
