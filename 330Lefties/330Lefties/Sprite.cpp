@@ -69,8 +69,30 @@ int Sprite::makeFrame(SDL_Texture* texture, int x, int y){
 }
 
 int Sprite::addFrameToSequence(std::string seqName, int frameIndex){
-	sequenceList[seqName].first.push_back(frameIndex);
-	return sequenceList[seqName].first.size();
+	
+	int framesAfterAdd;
+
+	// if sequence name has not been added yet
+	if (sequenceList.find(seqName) == end(sequenceList))
+	{
+		// Create new int vector with frameIndex
+		std::vector<int> newSequence;
+		newSequence.push_back(frameIndex);
+		
+		std::pair< std::vector<int>, unsigned int>(newSequence, 0) newPair;
+		
+		// Add new mapping to sequence list
+		sequenceList.insert(std::pair<std::string, std::pair<std::vector<int>, unsigned int>>(seqName, newPair));
+
+		framesAfterAdd = 1;
+	}
+	else // Otherwise add the frameIndex to the appropriate mapping
+	{
+		sequenceList.at(seqName).first.push_back(frameIndex);
+		framesAfterAdd = sequenceList.at(seqName).first.size() - 1;
+	}
+
+	return framesAfterAdd;
 }
 
 void Sprite::show(int frameIndex){
@@ -83,10 +105,16 @@ void Sprite::show(int frameIndex){
 }
 
 void Sprite::show(std::string sequence){
-	if (sequenceList[sequence].second >= sequenceList[sequence].first.size()){
+	
+	if(sequenceList.find(sequence) == end(sequenceList)) { // If sequence doesn't exist
+		return;
+	}
+	else if (sequenceList[sequence].second >= sequenceList[sequence].first.size()) { // If sequence index out of bounds
 		sequenceList[sequence].second = 0;
 	}
-	show(sequenceList[sequence].first[sequenceList[sequence].second]);
+	int frameIndex = sequenceList[sequence].second;
+	
+	show(sequenceList[sequence].first[frameIndex]);
 	++sequenceList[sequence].second;
 }
 
