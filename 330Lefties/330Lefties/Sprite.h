@@ -32,14 +32,9 @@ public:
 	virtual void update();
 	virtual void render();
 
-
-	// The private part of the class is given as a hint or suggestion.
-	// In homework 3 you can make any modifications you want to the class's innards.
 protected:
-	//int width, height;
-	//int currX, currY;		// the coordinates of the sprite's upper left hand corner relative to the window
 	SDL_Renderer* renderer;
-	std::string current_seq;
+	std::string current_seq; // The name of the current sequence being displayed. Default is empty string.
 
 	struct frame
 	{
@@ -47,9 +42,10 @@ protected:
 		int x;
 		int y;
 	};
+	// Container for all the frames available to this sprite
 	std::vector<frame> frames;
 
+	// Mapping of sequence names to pairs of (1. List of frames 2. Current sequence index)
 	std::map<std::string, std::pair <std::vector<int>, unsigned int>> sequenceList;
-
 };
 
