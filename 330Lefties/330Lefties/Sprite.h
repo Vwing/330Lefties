@@ -1,13 +1,13 @@
 #pragma once
 
-#include "SDL.h"
+#include "GameObject.h"
 #include <vector>
 #include <map>
 
-class Sprite
+class Sprite : public GameObject
 {
 public:
-	Sprite(int width, int height, SDL_Renderer* ren);
+	Sprite(int width, int height, SDL_Renderer* ren, int xPos= 0, int yPos = 0, std::string start_seq = "");
 	~Sprite(void);
 
 	void setPos(int x, int y);
@@ -26,14 +26,20 @@ public:
 	void show(int frameIndex);
 	// show(string) cycles through all frames in the specified sequence, one per call
 	void show(std::string sequence);
+	void changeSequence(std::string seq);
+
+	virtual void handleEvent(SDL_Event sdlEvent);
+	virtual void update();
+	virtual void render();
 
 
 	// The private part of the class is given as a hint or suggestion.
 	// In homework 3 you can make any modifications you want to the class's innards.
-private:
-	int width, height;
-	int currX, currY;		// the coordinates of the sprite's upper left hand corner relative to the window
+protected:
+	//int width, height;
+	//int currX, currY;		// the coordinates of the sprite's upper left hand corner relative to the window
 	SDL_Renderer* renderer;
+	std::string current_seq;
 
 	struct frame
 	{

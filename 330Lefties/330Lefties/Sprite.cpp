@@ -23,10 +23,13 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
 	renderTexture(tex, ren, dst, clip);
 }
 
-Sprite::Sprite(int width, int height, SDL_Renderer* ren){
-	this->width = width;
-	this->height = height;
+Sprite::Sprite(int width, int height, SDL_Renderer* ren, int xPos, int yPos, std::string start_seq){
+	body.width = width;
+	body.height = height;
 	renderer = ren;
+	body.xPos = xPos;
+	body.yPos = yPos;
+	current_seq = start_seq;
 }
 
 Sprite::~Sprite(void){
@@ -36,24 +39,24 @@ Sprite::~Sprite(void){
 }
 
 void Sprite::setPos(int x, int y){
-	currX = x;
-	currY = y;
+	body.xPos = x;
+	body.yPos = y;
 }
 
 void Sprite::movex(int delta){
-	currX += delta;
+	body.xPos += delta;
 }
 
 void Sprite::movey(int delta){
-	currY += delta;
+	body.yPos += delta;
 }
 
 int Sprite::getX(){
-	return currX;
+	return body.xPos;
 }
 
 int Sprite::getY(){
-	return currY;
+	return body.yPos;
 }
 
 int Sprite::makeFrame(SDL_Texture* texture, int x, int y){
@@ -74,9 +77,9 @@ void Sprite::show(int frameIndex){
 	SDL_Rect clip;
 	clip.x = frames[frameIndex].x;
 	clip.y = frames[frameIndex].y;
-	clip.w = width;
-	clip.h = height;
-	renderTexture(frames[frameIndex].texture, renderer, currX, currY, &clip);
+	clip.w = body.width;
+	clip.h = body.height;
+	renderTexture(frames[frameIndex].texture, renderer, body.xPos, body.yPos, &clip);
 }
 
 void Sprite::show(std::string sequence){
@@ -85,4 +88,25 @@ void Sprite::show(std::string sequence){
 	}
 	show(sequenceList[sequence].first[sequenceList[sequence].second]);
 	++sequenceList[sequence].second;
+}
+
+void Sprite::changeSequence(std::string seq){
+	current_seq = seq;
+}
+
+void Sprite::handleEvent(SDL_Event sdlEvent){
+
+}
+
+void Sprite::update(){
+
+}
+
+void Sprite::render(){
+	if (current_seq == "" && !frames.empty()){
+		show(0);
+	}
+	else{
+		show(current_seq);
+	}
 }
