@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "EventManager.h"
 
 Character::Character(int width, int height, SDL_Renderer* ren, int startX, int startY, std::string start_seq, int startHP) : Sprite(width, height, ren, startX, startY, start_seq){
 	//gravity = true;
@@ -7,6 +8,8 @@ Character::Character(int width, int height, SDL_Renderer* ren, int startX, int s
 	moveSeq.right = "walk right";
 	moveSeq.jump = "walk up";
 	moveSeq.fall = "walk down";
+	
+	EventManager::getInstance().subscribe(this, SDL_KEYDOWN);
 }
 
 Character::~Character(void){
@@ -73,10 +76,6 @@ void Character::handleEvent(SDL_Event sdlEvent){
 }
 
 void Character::update(){
-	SDL_Event e;
-	while (SDL_PollEvent(&e)){
-		handleEvent(e);
-	}
 }
 
 void Character::render(){
