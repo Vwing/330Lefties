@@ -9,7 +9,7 @@ Character::Character(int width, int height, SDL_Renderer* ren, int startX, int s
 	moveSeq.jump = "walk up";
 	moveSeq.fall = "walk down";
 	
-	//EventManager::getInstance().subscribe(this, SDL_KEYDOWN);
+	EventManager::getInstance().subscribe(*this, SDL_KEYDOWN);
 }
 
 Character::~Character(void){
