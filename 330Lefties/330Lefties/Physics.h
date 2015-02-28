@@ -26,7 +26,7 @@ public:
 	}
 
 
-	void gravity(GameObject obj/*game object*/){ //
+	void gravity(GameObject obj){ //
 		obj.body.xPos -= 2;
 	}
 
