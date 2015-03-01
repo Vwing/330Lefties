@@ -6,7 +6,7 @@
 #include <cleanup.h>
 #include <SDL_image.h>
 
-#include "SpriteWithBody.h"
+#include "Sprite.h"
 #include "EventManager.h"
 #include "Game.h"
 
