@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include "EventManager.h"
 #include "GameObject.h"
-#include "SpriteWithBody.h"
+#include "Sprite.h"
 
 class Game
 {
