@@ -1,8 +1,10 @@
 #include "Environment.h"
 
-Environment::Environment()
+Environment::Environment(int worldWidth, int worldHeight, Camera* c)
+: WORLD_WIDTH(worldWidth), WORLD_HEIGHT(worldHeight)
 {
-	camera = new Camera();
+	physics = new Physics(WORLD_HEIGHT, WORLD_WIDTH);
+	camera = c;
 }
 
 void Environment::update()
@@ -12,8 +14,13 @@ void Environment::update()
 		{
 			o->body.screenX = o->body.xPos - camera->body.xPos;
 			o->body.screenY = o->body.yPos - camera->body.yPos;
-			o->render();
-			if (o->body.physical)
-				physics.update(o);
+			o->render(); // might not belong here
+			if (o->body.physical) 
+				physics->update(o);
 		}
+}
+
+void Environment::addObject(GameObject* o)
+{
+	environment.push_back(o);
 }
