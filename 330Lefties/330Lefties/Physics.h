@@ -6,23 +6,41 @@
 
 class Physics{
 public:
-
-	void check_borders(GameObject* obj){ //constants can be replaced with variables
-		if (obj->body.yPos + obj->body.height > 480){ //bottom
-			obj->body.yPos = 480 - obj->body.height;
-		}
-		else if (obj->body.yPos < 0) //top
-			obj->body.yPos = 0;
-		if (obj->body.xPos + obj->body.width > 640) //right
-			obj->body.xPos -= obj->body.width / 20;
-		else if (obj->body.xPos < 0) //left
-			obj->body.xPos = 0;
+	Physics(int worldHeight, int worldWidth)
+		:WORLD_HEIGHT(worldHeight), WORLD_WIDTH(worldWidth)
+	{
 	}
 
-	//void set_borders(int width, int height)
-	//{
+	// Returns true if given game object is colliding with world bounds
+	// and moves the object back within the bounds. (<- should go in different function)
+	bool check_borders(GameObject* obj){ //constants can be replaced with variables
+		if (obj->body.yPos + obj->body.height >= WORLD_HEIGHT){ //bottom
+			obj->body.yPos = WORLD_HEIGHT - obj->body.height;
+			return true;
+		}
+		else if (obj->body.yPos <= 0) //top
+		{
+			obj->body.yPos = 0;
+			return true;
+		}
+		if (obj->body.xPos + obj->body.width >= WORLD_WIDTH) //right
+		{
+			obj->body.xPos -= obj->body.width / 20;
+			return true;
+		}
+		else if (obj->body.xPos <= 0) //left
+		{
+			obj->body.xPos = 0;
+			return true;
+		}
+			
+	}
 
-	//}
+	void set_world(int width, int height)
+	{
+		WORLD_HEIGHT = height;
+		WORLD_WIDTH = width;
+	}
 
 	bool check_collision(GameObject* obj1, GameObject* obj2){
 		return !(obj2->body.xPos > obj1->body.xPos + obj1->body.width
@@ -51,8 +69,8 @@ public:
 		}
 	}
 
-//private:
-//	const int WORLD_WIDTH;
-//	const int WORLD_HEIGHT;
+private:
+	int WORLD_WIDTH;
+	int WORLD_HEIGHT;
 };
 #endif
