@@ -3,9 +3,12 @@
 #include "SDL.h"
 
 Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
-:windowHeight(windowHeight), windowWidth(windowWidth), xPos(xPos), yPos(yPos)
+: windowWidth(windowWidth), windowHeight(windowHeight), xPos(xPos), yPos(yPos)
 {
 	quit = false;
+	camera = new Camera(windowWidth, windowHeight);
+	// Environment will use window width and height as default until we implement scrolling
+	environment = new Environment(windowWidth, windowHeight, camera);
 
 	// Load all resources
 	window = SDL_CreateWindow("Your Game", xPos, yPos, windowWidth,
@@ -35,6 +38,8 @@ void Game::update()
 	EventManager::getInstance().updateQueue();
 	EventManager::getInstance().handleEvents();
 
+	environment->update();
+
 	for (GameObject* o : allGameObjects)
 	{
 		o->update();
@@ -56,6 +61,7 @@ Sprite* Game::addSprite(int width, int height, int xPos, int yPos)
 	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos);
 
 	allGameObjects.push_back(newSprite);
+	environment->addObject(newSprite);
 
 	return newSprite;
 }
