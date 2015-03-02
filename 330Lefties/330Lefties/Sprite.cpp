@@ -79,7 +79,7 @@ void Sprite::show(int frameIndex){
 	clip.y = frames[frameIndex].y;
 	clip.w = body.width;
 	clip.h = body.height;
-	renderTexture(frames[frameIndex].texture, renderer, body.xPos, body.yPos, &clip);
+	renderTexture(frames[frameIndex].texture, renderer, body.screenX, body.screenY, &clip);
 }
 
 void Sprite::show(std::string sequence){
