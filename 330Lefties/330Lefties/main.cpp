@@ -74,8 +74,10 @@ int main(int argc, char **argv){
 		return 1;
 	}
 
-	Sprite* spriteBG = game->addSprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+	Sprite* spriteBG = game->loadSprite(SCREEN_WIDTH, SCREEN_HEIGHT);
 	int bgFrame = spriteBG->makeFrame(background, 0, 0);
+
+	game->addGameObject(spriteBG);
 
 	SDL_Texture *spritesheet = loadTexture(resPath + "newSpriteSheet.png", game->renderer);
 	if (spritesheet == nullptr){
@@ -85,7 +87,8 @@ int main(int argc, char **argv){
 		return 1;
 	}
 
-	Sprite* sprite1 = game->addSprite(32, 32);
+	Sprite* sprite1 = game->loadSprite(32, 32);
+
 
 	int down1 = sprite1->makeFrame(spritesheet, 0, 0);
 	int down2 = sprite1->makeFrame(spritesheet, 32, 0);
@@ -125,6 +128,7 @@ int main(int argc, char **argv){
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 2;
 	sprite1->setPos(x, y);
+	game->addCharacter(sprite1, 100);
 
 	while (!game->isOver()){
 

@@ -1,14 +1,14 @@
 #include "Character.h"
 #include "EventManager.h"
 
-Character::Character(int width, int height, SDL_Renderer* ren, int startX, int startY, std::string start_seq, int startHP) : Sprite(width, height, ren, startX, startY, start_seq){
-	//gravity = true;
+Character::Character(Sprite* sprite, SDL_Renderer* ren, int startHP){
+	this->sprite = sprite;
 	hp = startHP;
 	moveSeq.left = "walk left";
 	moveSeq.right = "walk right";
 	moveSeq.jump = "walk up";
 	moveSeq.fall = "walk down";
-	
+
 	EventManager::getInstance().subscribe(*this, SDL_KEYDOWN);
 }
 
@@ -39,23 +39,23 @@ void Character::changeSequenceName(std::string movementType, std::string seq){
 }
 
 void Character::moveLeft(unsigned int distance){
-	movex(-1 * distance);
-	changeSequence(moveSeq.left);
+	sprite->movex(-1 * distance);
+	sprite->changeSequence(moveSeq.left);
 }
 
 void Character::moveRight(unsigned int distance){
-	movex(distance);
-	changeSequence(moveSeq.right);
+	sprite->movex(distance);
+	sprite->changeSequence(moveSeq.right);
 }
 
 void Character::jump(unsigned int distance){
-	movey(-1 * distance);
-	changeSequence(moveSeq.jump);
+	sprite->movey(-1 * distance);
+	sprite->changeSequence(moveSeq.jump);
 }
 
 void Character::fall(unsigned int distance){
-	movey(distance);
-	changeSequence(moveSeq.fall);
+	sprite->movey(distance);
+	sprite->changeSequence(moveSeq.fall);
 }
 
 void Character::handleEvent(SDL_Event sdlEvent){
@@ -79,5 +79,5 @@ void Character::update(){
 }
 
 void Character::render(){
-	show(current_seq);
+	sprite->render();
 }

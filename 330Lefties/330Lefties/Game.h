@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Environment.h"
 #include "Physics.h"
+#include "Character.h"
 
 
 class Game
@@ -20,8 +21,11 @@ public:
 
 	bool isOver();
 
-	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
-	
+//	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
+	Sprite* loadSprite(int width, int height, int xPos = 0, int yPos = 0);
+	void addGameObject(Sprite* sprite);
+	Character* addCharacter(Sprite* sprite, int HP);
+
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 

@@ -56,6 +56,7 @@ void Game::render()
 	SDL_RenderPresent(renderer);
 }
 
+/*
 Sprite* Game::addSprite(int width, int height, int xPos, int yPos)
 {
 	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos);
@@ -64,6 +65,26 @@ Sprite* Game::addSprite(int width, int height, int xPos, int yPos)
 	environment->addObject(newSprite);
 
 	return newSprite;
+}
+*/
+Sprite* Game::loadSprite(int width, int height, int xPos, int yPos)
+{
+	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos);
+	return newSprite;
+}
+
+void Game::addGameObject(Sprite* sprite){
+	allGameObjects.push_back(sprite);
+	environment->addObject(sprite);
+}
+
+Character* Game::addCharacter(Sprite* sprite, int HP){
+	Character* newChar = new Character(sprite, renderer, HP);
+
+	allGameObjects.push_back(newChar);
+	environment->addObject(newChar);
+	
+	return newChar;
 }
 
 bool Game::isOver()

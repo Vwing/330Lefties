@@ -1,10 +1,11 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
+#include "GameObject.h"
 #include "Sprite.h"
 
-class Character: public Sprite{
+class Character : public GameObject{
 public:
-	Character(int width, int height, SDL_Renderer* ren, int startX, int startY, std::string start_seq, int startHP = 100);
+	Character(Sprite* sprite, SDL_Renderer* ren, int startHP = 100);
 	~Character(void);
 
 	//Increases or decreases HP given int
@@ -28,6 +29,7 @@ private:
 	int y;
 	int hp;
 	int mass;
+	Sprite* sprite;
 
 	struct MoveSequences{
 		std::string left;
