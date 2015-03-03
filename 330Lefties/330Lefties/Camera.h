@@ -10,7 +10,7 @@ public:
 
 	bool canSee(GameObject* obj1); //stolen from Physics
 
-	virtual void handleEvent(SDL_Event sdlEvent);
+	virtual void handleEvent(Uint32 sdlEvent);
 	virtual void update();
 	virtual void render();
 };

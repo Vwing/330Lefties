@@ -22,7 +22,7 @@ void Camera::update() {}
 
 void Camera::render() {}
 
-void Camera::handleEvent(SDL_Event sdlEvent) 
+void Camera::handleEvent(Uint32 sdlEvent) 
 {
 	/*
 		Implementation for events:

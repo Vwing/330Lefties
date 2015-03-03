@@ -94,7 +94,7 @@ void Sprite::changeSequence(std::string seq){
 	current_seq = seq;
 }
 
-void Sprite::handleEvent(SDL_Event sdlEvent){
+void Sprite::handleEvent(Uint32 sdlEvent){
 
 }
 

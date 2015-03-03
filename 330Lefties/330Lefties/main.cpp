@@ -79,7 +79,7 @@ int main(int argc, char **argv){
 
 	game->addGameObject(spriteBG);
 
-	SDL_Texture *spritesheet = loadTexture(resPath + "newSpriteSheet.png", game->renderer);
+	SDL_Texture *spritesheet = loadTexture(resPath + "Fey.png", game->renderer);
 	if (spritesheet == nullptr){
 		cleanup(spritesheet);
 		IMG_Quit();

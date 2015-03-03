@@ -94,18 +94,19 @@ void Button::show(std::string sequence){
 	show(sequenceList.at(sequence)[sequenceIndex]);
 	sequenceIndex++;
 }
-
-void Button::start(SDL_Event* e){
+/*
+void Button::start(Uint32* e){
 	addFrameToSequence("mouse up", makeFrame(loadTexture(), 0, 0));
 	addFrameToSequence("mouse down", makeFrame(loadTexture(), 0, height));
 	std::string button = "mouse up";
+	
 	if (e->type == SDL_MOUSEBUTTONUP || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEMOTION){
 		int x, y;
 		SDL_GetMouseState(&x, &y);
 		bool inside = true;
 
-		if (x < currX /*Mouse is left of the button*/ || x > currX + width /*Mouse is right of the button*/
-			|| y < currY /*Mouse is above the button*/ || y > currY + height /*Mouse is below the button*/)
+		if (x < currX /*Mouse is left of the button || x > currX + width /*Mouse is right of the button
+			|| y < currY /*Mouse is above the button || y > currY + height /*Mouse is below the button)
 			inside = false;
 		if (!inside){
 			button = "mouse up";
@@ -128,4 +129,5 @@ void Button::start(SDL_Event* e){
 		}
 	}
 	show(button.c_str());
-}
+	
+}*/

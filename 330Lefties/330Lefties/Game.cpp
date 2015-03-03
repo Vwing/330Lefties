@@ -35,8 +35,9 @@ Game::~Game()
 
 void Game::update()
 {
-	EventManager::getInstance().updateQueue();
-	EventManager::getInstance().handleEvents();
+//	EventManager::getInstance().updateQueue();
+	//EventManager::getInstance().handleEvents();
+	EventManager::getInstance().Update();
 
 	environment->update();
 

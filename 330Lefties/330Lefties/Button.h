@@ -22,7 +22,7 @@ public:
 	int addFrameToSequence(std::string seqName, int frameIndex);
 	void show(int frameIndex);
 	void show(std::string sequence);
-	void start(SDL_Event* e);
+	void start(Uint32* e);
 
 
 private:

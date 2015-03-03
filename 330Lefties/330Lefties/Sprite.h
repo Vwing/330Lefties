@@ -28,7 +28,7 @@ public:
 	void show(std::string sequence);
 	void changeSequence(std::string seq);
 
-	virtual void handleEvent(SDL_Event sdlEvent);
+	virtual void handleEvent(Uint32 sdlEvent);
 	virtual void update();
 	virtual void render();
 
