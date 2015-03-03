@@ -74,9 +74,10 @@ Sprite* Game::loadSprite(int width, int height, int xPos, int yPos)
 	return newSprite;
 }
 
-void Game::addGameObject(Sprite* sprite){
-	allGameObjects.push_back(sprite);
-	environment->addObject(sprite);
+GameObject* Game::addGameObject(GameObject* gameObject){
+	allGameObjects.push_back(gameObject);
+	environment->addObject(gameObject);
+	return gameObject;
 }
 
 Character* Game::addCharacter(Sprite* sprite, int HP){
