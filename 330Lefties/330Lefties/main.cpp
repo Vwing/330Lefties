@@ -93,37 +93,51 @@ int main(int argc, char **argv){
 	int down1 = sprite1->makeFrame(spritesheet, 0, 0);
 	int down2 = sprite1->makeFrame(spritesheet, 32, 0);
 	int down3 = sprite1->makeFrame(spritesheet, 64, 0);
-	int left1 = sprite1->makeFrame(spritesheet, 0, 32);
-	int left2 = sprite1->makeFrame(spritesheet, 32, 32);
-	int left3 = sprite1->makeFrame(spritesheet, 64, 32);
-	int right1 = sprite1->makeFrame(spritesheet, 0, 64);
-	int right2 = sprite1->makeFrame(spritesheet, 32, 64);
-	int right3 = sprite1->makeFrame(spritesheet, 64, 64);
-	int up1 = sprite1->makeFrame(spritesheet, 0, 96);
-	int up2 = sprite1->makeFrame(spritesheet, 32, 96);
-	int up3 = sprite1->makeFrame(spritesheet, 64, 96);
+	int left1 = sprite1->makeFrame(spritesheet, 0, 36);
+	int left2 = sprite1->makeFrame(spritesheet, 32, 36);
+	int left3 = sprite1->makeFrame(spritesheet, 64, 36);
+	int right1 = sprite1->makeFrame(spritesheet, 0, 72);
+	int right2 = sprite1->makeFrame(spritesheet, 32, 72);
+	int right3 = sprite1->makeFrame(spritesheet, 64, 72);
+	int up1 = sprite1->makeFrame(spritesheet, 0, 108);
+	int up2 = sprite1->makeFrame(spritesheet, 32, 108);
+	int up3 = sprite1->makeFrame(spritesheet, 64, 108);
 
-	for (int i = 0; i < 6; i++)
-	{
-		sprite1->addFrameToSequence("walk down", down1);
-		sprite1->addFrameToSequence("walk left", left1);
-		sprite1->addFrameToSequence("walk right", right1);
-		sprite1->addFrameToSequence("walk up", up1);
-	}
-	for (int i = 0; i < 6; i++)
-	{
-		sprite1->addFrameToSequence("walk down", down2);
-		sprite1->addFrameToSequence("walk left", left2);
-		sprite1->addFrameToSequence("walk right", right2);
-		sprite1->addFrameToSequence("walk up", up2);
-	}
-	for (int i = 0; i < 6; i++)
-	{
-		sprite1->addFrameToSequence("walk down", down3);
-		sprite1->addFrameToSequence("walk left", left3);
-		sprite1->addFrameToSequence("walk right", right3);
-		sprite1->addFrameToSequence("walk up", up3);
-	}
+	sprite1->addFrameToSequence("walk down", down1, 100);
+	sprite1->addFrameToSequence("walk left", left1, 100);
+	sprite1->addFrameToSequence("walk right", right1, 100);
+	sprite1->addFrameToSequence("walk up", up1, 100);
+
+	sprite1->addFrameToSequence("walk down", down2, 100);
+	sprite1->addFrameToSequence("walk left", left2, 100);
+	sprite1->addFrameToSequence("walk right", right2, 100);
+	sprite1->addFrameToSequence("walk up", up2, 100);
+
+	sprite1->addFrameToSequence("walk down", down3, 100);
+	sprite1->addFrameToSequence("walk left", left3, 100);
+	sprite1->addFrameToSequence("walk right", right3, 100);
+	sprite1->addFrameToSequence("walk up", up3, 100);
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	sprite1->addFrameToSequence("walk down", down1);
+	//	sprite1->addFrameToSequence("walk left", left1);
+	//	sprite1->addFrameToSequence("walk right", right1);
+	//	sprite1->addFrameToSequence("walk up", up1);
+	//}
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	sprite1->addFrameToSequence("walk down", down2);
+	//	sprite1->addFrameToSequence("walk left", left2);
+	//	sprite1->addFrameToSequence("walk right", right2);
+	//	sprite1->addFrameToSequence("walk up", up2);
+	//}
+	//for (int i = 0; i < 6; i++)
+	//{
+	//	sprite1->addFrameToSequence("walk down", down3);
+	//	sprite1->addFrameToSequence("walk left", left3);
+	//	sprite1->addFrameToSequence("walk right", right3);
+	//	sprite1->addFrameToSequence("walk up", up3);
+	//}
 
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 2;
