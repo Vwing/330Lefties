@@ -1,20 +1,18 @@
-For the project as a whole:
+Sprite:
 
-1. We need task / bug tracking within the week!
+1. Add SDL texture loading into the class. 
+The game programmer should only need to provide a filepath of an image in order to create a sprite.
 
-For Sprite:
+Button:
 
-1. Migrate sound to another class while keeping the same functionality.
+1. Should contain a sprite object with which to draw the button.
+2. The game programmer should have a way to set the 'onUp' or 'onDown' sequences/frames
+3. Every button should be subscribed to (and handle) mouse click events
 
-For Event Manager:
+Physics:
 
-1. EventManager::Update() could theoritically run forever if there are enough events.
-
-StartEventProcessing is called in the while loop that checks for events.  
-If more events occurs before the processing finishes, the while loop will continue. 
-A timer could stop the update at some point.
-
-2. EventManager::StartEventProcessing() might limit the types of events that can be dispatched.
-
-What if an object wants to know if ANY mouse button was pressed rather than a specific one?
-
+1. Physically restricting objects from leaving the world bounds should be an option, not automatic.
+2. We need overrided collision functions that handle 
+  a. unit vs. unit 
+  b. unit vs. group
+  c. group vs. group
