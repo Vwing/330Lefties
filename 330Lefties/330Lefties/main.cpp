@@ -65,18 +65,17 @@ int main(int argc, char **argv){
 	const std::string resPath = getResourcePath("330LProject");
 	
 
-	//SDL_Texture *background = loadTexture(resPath + "Background.png", game->renderer);
-	////Make sure all is well
-	//if (background == nullptr){
-	//	cleanup(background);
-	//	IMG_Quit();
-	//	SDL_Quit();
-	//	return 1;
-	//}
-	//Sprite* spriteBG = game->loadSprite(SCREEN_WIDTH, SCREEN_HEIGHT);
-	//int bgFrame = spriteBG->makeFrame(background, 0, 0);
+	SDL_Texture *background = loadTexture(resPath + "Background.png", game->renderer);
+	//Make sure all is well
+	if (background == nullptr){
+		cleanup(background);
+		IMG_Quit();
+		SDL_Quit();
+		return 1;
+	}
 
-	Sprite* spriteBG = game->loadSprite(SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, resPath + "Background.png");
+	Sprite* spriteBG = game->loadSprite(SCREEN_WIDTH, SCREEN_HEIGHT);
+	int bgFrame = spriteBG->makeFrame(background, 0, 0);
 
 	game->addGameObject(spriteBG);
 
@@ -118,24 +117,6 @@ int main(int argc, char **argv){
 	sprite1->addFrameToSequence("walk left", left3, 100);
 	sprite1->addFrameToSequence("walk right", right3, 100);
 	sprite1->addFrameToSequence("walk up", up3, 100);
-
-	//Example for duration with each frame 2.5 seconds
-	//sprite1->addFrameToSequence("walk down", down1, 2500);
-	//sprite1->addFrameToSequence("walk left", left1, 2500);
-	//sprite1->addFrameToSequence("walk right", right1, 2500);
-	//sprite1->addFrameToSequence("walk up", up1, 2500);
-
-	//sprite1->addFrameToSequence("walk down", down2, 2500);
-	//sprite1->addFrameToSequence("walk left", left2, 2500);
-	//sprite1->addFrameToSequence("walk right", right2, 2500);
-	//sprite1->addFrameToSequence("walk up", up2, 2500);
-
-	//sprite1->addFrameToSequence("walk down", down3, 2500);
-	//sprite1->addFrameToSequence("walk left", left3, 2500);
-	//sprite1->addFrameToSequence("walk right", right3, 2500);
-	//sprite1->addFrameToSequence("walk up", up3, 2500);
-
-	//Previous way of choosing how long a sprite frame is
 	//for (int i = 0; i < 6; i++)
 	//{
 	//	sprite1->addFrameToSequence("walk down", down1);
@@ -170,7 +151,7 @@ int main(int argc, char **argv){
 		game->render();
 	}
 
-	cleanup(spritesheet);
+	cleanup(background, spritesheet);
 	IMG_Quit();
 	SDL_Quit();
 
