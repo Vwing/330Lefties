@@ -22,7 +22,7 @@ public:
 	bool isOver();
 
 //	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
-	Sprite* loadSprite(int width, int height, int xPos = 0, int yPos = 0);
+	Sprite* loadSprite(int width, int height, int xPos = 0, int yPos = 0, std::string filePath = "");
 	GameObject* addGameObject(GameObject* gameObject);
 	Character* addCharacter(Sprite* sprite, int HP);
 

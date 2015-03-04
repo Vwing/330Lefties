@@ -1,6 +1,24 @@
 // TODO: code this
 #include "Sprite.h"
 #include <chrono>
+#include <SDL.h>
+#include <Windows.h>
+#include <iostream>
+#include <sstream>
+#include <SDL_image.h>
+
+
+SDL_Texture* loadSpriteTexture(const std::string &file, SDL_Renderer *ren){
+	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
+	if (texture == nullptr){
+		//logSDLError(std::cout, "LoadTexture");
+		std::cout << "LoadTexture" << " error: " << SDL_GetError() << std::endl;
+		std::ostringstream errMsg;
+		errMsg << " error: " << SDL_GetError() << std::endl;
+		OutputDebugString(errMsg.str().c_str());
+	}
+	return texture;
+}
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst,
 	SDL_Rect *clip = nullptr)
@@ -24,13 +42,22 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
 	renderTexture(tex, ren, dst, clip);
 }
 
-Sprite::Sprite(int width, int height, SDL_Renderer* ren, int xPos, int yPos, std::string start_seq){
+Sprite::Sprite(int width, int height, SDL_Renderer* ren, int xPos, int yPos, std::string start_seq, std::string filePath){
 	body.width = width;
 	body.height = height;
 	renderer = ren;
 	body.xPos = xPos;
 	body.yPos = yPos;
 	current_seq = start_seq;
+	if (filePath != ""){
+		SDL_Texture* texture = loadSpriteTexture(filePath, ren);
+		if (texture == nullptr){
+			IMG_Quit();
+			SDL_Quit();
+			this->~Sprite();
+		}
+		makeFrame(texture, xPos, yPos);
+	}
 }
 
 Sprite::~Sprite(void){

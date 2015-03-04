@@ -68,9 +68,9 @@ Sprite* Game::addSprite(int width, int height, int xPos, int yPos)
 	return newSprite;
 }
 */
-Sprite* Game::loadSprite(int width, int height, int xPos, int yPos)
+Sprite* Game::loadSprite(int width, int height, int xPos, int yPos, std::string filePath)
 {
-	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos);
+	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos, "", filePath);
 	return newSprite;
 }
 

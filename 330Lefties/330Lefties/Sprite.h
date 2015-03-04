@@ -7,7 +7,7 @@
 class Sprite : public GameObject
 {
 public:
-	Sprite(int width, int height, SDL_Renderer* ren, int xPos = 0, int yPos = 0, std::string start_seq = "");
+	Sprite(int width, int height, SDL_Renderer* ren, int xPos = 0, int yPos = 0, std::string start_seq = "", std::string filePath = "");
 	~Sprite(void);
 
 	void setPos(int x, int y);
