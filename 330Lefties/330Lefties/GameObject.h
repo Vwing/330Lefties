@@ -14,14 +14,12 @@ public:
 		int screenY;
 		int width;
 		int height;
-		bool physical = true; //does object use Physics
-		float gravity = 1; //magnitude of gravity on object
 		int layer = 1;
 	};
+	
+	Body body; // Contains position and dimensions of object
+	virtual void update() = 0; // Updates the state of this game object - in main game loop
+	virtual void render() = 0; // Draws this game object onto the renderer - in main game loop
 
-	Body body;
-	virtual void update() = 0;
-	virtual void render() = 0;
-
-	virtual void handleEvent(SDL_Event sdlEvent) = 0;
+	virtual void handleEvent(Uint32 sdlEvent) = 0; // Called by event manager if this object is subscribed to 'sdlEvent'
 };

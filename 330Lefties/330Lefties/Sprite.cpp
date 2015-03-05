@@ -1,5 +1,6 @@
 // TODO: code this
 #include "Sprite.h"
+#include <chrono>
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst,
 	SDL_Rect *clip = nullptr)
@@ -68,9 +69,11 @@ int Sprite::makeFrame(SDL_Texture* texture, int x, int y){
 	return frames.size() - 1;
 }
 
-int Sprite::addFrameToSequence(std::string seqName, int frameIndex){
-	sequenceList[seqName].first.push_back(frameIndex);
-	return sequenceList[seqName].first.size();
+int Sprite::addFrameToSequence(std::string seqName, int frameIndex, unsigned int duration){
+	//sequenceList[seqName].first.push_back(frameIndex);
+	//return sequenceList[seqName].first.size();
+	sequenceList[seqName].frameVector.push_back(std::make_pair(frameIndex, duration));
+	return sequenceList[seqName].frameVector.size();
 }
 
 void Sprite::show(int frameIndex){
@@ -83,18 +86,27 @@ void Sprite::show(int frameIndex){
 }
 
 void Sprite::show(std::string sequence){
-	if (sequenceList[sequence].second >= sequenceList[sequence].first.size()){
-		sequenceList[sequence].second = 0;
+	if (sequenceList[sequence].currentIndex >= sequenceList[sequence].frameVector.size()){
+		sequenceList[sequence].currentIndex = 0;
 	}
-	show(sequenceList[sequence].first[sequenceList[sequence].second]);
-	++sequenceList[sequence].second;
+	show(sequenceList[sequence].frameVector[sequenceList[sequence].currentIndex].first);
+	auto currentTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	if (sequenceList[sequence].frameVector[sequenceList[sequence].currentIndex].second == 0 || currentTime >= frameStartTime + sequenceList[sequence].frameVector[sequenceList[sequence].currentIndex].second){
+		++sequenceList[sequence].currentIndex;
+		frameStartTime = currentTime;
+	}
+	//if (sequenceList[sequence].second >= sequenceList[sequence].first.size()){
+	//	sequenceList[sequence].second = 0;
+	//}
+	//show(sequenceList[sequence].first[sequenceList[sequence].second]);
+	//++sequenceList[sequence].second;
 }
 
 void Sprite::changeSequence(std::string seq){
 	current_seq = seq;
 }
 
-void Sprite::handleEvent(SDL_Event sdlEvent){
+void Sprite::handleEvent(Uint32 sdlEvent){
 
 }
 

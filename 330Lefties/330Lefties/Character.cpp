@@ -1,3 +1,4 @@
+#include "Globals.h"
 #include "Character.h"
 #include "EventManager.h"
 
@@ -9,7 +10,10 @@ Character::Character(Sprite* sprite, SDL_Renderer* ren, int startHP){
 	moveSeq.jump = "walk up";
 	moveSeq.fall = "walk down";
 
-	EventManager::getInstance().subscribe(*this, SDL_KEYDOWN);
+	//EventManager::getInstance().subscribe(*this, SDL_KEYDOWN);
+	Global_RegisterForEvent(this, SDLK_RIGHT);
+	Global_RegisterForEvent(this, SDLK_LEFT);
+	Global_RegisterForEvent(this, SDLK_UP);
 }
 
 Character::~Character(void){
@@ -58,6 +62,7 @@ void Character::fall(unsigned int distance){
 	sprite->changeSequence(moveSeq.fall);
 }
 
+/*
 void Character::handleEvent(SDL_Event sdlEvent){
 	if (sdlEvent.type == SDL_KEYDOWN){
 		if (sdlEvent.key.keysym.sym == SDLK_RIGHT)
@@ -72,6 +77,22 @@ void Character::handleEvent(SDL_Event sdlEvent){
 		{
 			jump(5);
 		}
+	}
+}
+*/
+
+void Character::handleEvent(Uint32 sdlEvent){
+	if (sdlEvent == SDLK_RIGHT)
+	{
+			moveRight(5);
+	}
+	else if (sdlEvent == SDLK_LEFT)
+	{
+			moveLeft(5);
+	}
+	else if (sdlEvent == SDLK_UP)
+	{
+			jump(5);
 	}
 }
 

@@ -23,7 +23,7 @@ public:
 
 //	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
 	Sprite* loadSprite(int width, int height, int xPos = 0, int yPos = 0);
-	void addGameObject(Sprite* sprite);
+	GameObject* addGameObject(GameObject* gameObject);
 	Character* addCharacter(Sprite* sprite, int HP);
 
 	SDL_Window *window;

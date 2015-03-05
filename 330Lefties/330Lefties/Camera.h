@@ -18,6 +18,7 @@ public:
 	//Change Environment and change (x,y) position of camera.
 	void setEnvironment(Environment* env, int x, int y);
 
+<<<<<<< HEAD
 	//Set the camera position (relative to the environment's top left corner).
 	void setCameraPos(int x, int y);
 
@@ -53,4 +54,9 @@ private:
 
 	int pan_amount;
 	GameObject* center_obj;
+=======
+	virtual void handleEvent(Uint32 sdlEvent);
+	virtual void update();
+	virtual void render();
+>>>>>>> 6dca171f90896d1e716adeeb01279f7c217d11cb
 };
