@@ -195,7 +195,7 @@ void Camera::render() {
 	}
 }
 
-void Camera::handleEvent(Uint32 sdlEvent) 
+void Camera::handleEvent(SDL_Event sdlEvent) 
 {
 	/*
 		Implementation for events:
