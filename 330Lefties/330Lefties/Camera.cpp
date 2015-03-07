@@ -22,6 +22,8 @@ Camera::Camera(int width, int height, Environment* env, int xPos, int yPos)
 	pan_amount = 0;
 
 	environment = env;
+	offset_x = 0;
+	offset_y = 0;
 }
 
 Camera::~Camera(void){
@@ -119,8 +121,8 @@ void Camera::update() {
 		break;
 	case CENTER_OBJ:
 		//center on center_obj
-		body.xPos = (center_obj->body.xPos + (center_obj->body.width / 2)) - body.width;
-		body.yPos = (center_obj->body.yPos + (center_obj->body.height / 2)) - body.height;
+		body.xPos = (center_obj->body.xPos + (center_obj->body.width / 2)) - (body.width / 2) + offset_x;
+		body.yPos = (center_obj->body.yPos + (center_obj->body.height / 2)) - (body.height / 2) + offset_y;
 		break;
 	case CONSTANT_PAN_X:
 		if (body.xPos + pan_amount < 0){
@@ -218,4 +220,13 @@ int Camera::getX(){
 
 int Camera::getY(){
 	return body.yPos;
+}
+
+void Camera::setMovementOption(MovementOption opt){
+	option = opt;
+}
+
+void Camera::setOffset(int x, int y){
+	offset_x = x;
+	offset_y = y;
 }

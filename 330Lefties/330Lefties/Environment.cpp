@@ -49,10 +49,15 @@ void Environment::addObject(GameObject* obj){
 
 void Environment::removeObject(GameObject* obj){
 	std::vector<GameObject*>::iterator it;
-	it = ind(objects.begin(), objects.end(), obj);
+	it = find(objects.begin(), objects.end(), obj);
 
 	if (it != objects.end()){
-		objects.erase(it);
+		//find index
+		int index = distance(objects.begin(), it);
+
+		//swap and pop
+		std::swap(objects.at(index), objects.back());
+		objects.pop_back();
 	}
 }
 

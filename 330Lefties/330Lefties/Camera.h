@@ -9,6 +9,8 @@ class Camera : public GameObject
 public:
 	Camera(int width, int height, Environment* env, int xPos = 0, int yPos = 0);
 	~Camera(void);
+	
+	enum MovementOption {CONSTANT_PAN_X, CONSTANT_PAN_Y, CENTER_OBJ, FIXED};
 
 	//Determines whether an object lies within the camera range.
 	bool canSee(GameObject* obj);
@@ -30,6 +32,13 @@ public:
 	//Set the object the camera should center on
 	void setCenterObject(GameObject* obj);
 
+	//Set movement option.
+	void setMovementOption(MovementOption option);
+
+	//Set camera offset.
+	void setOffset(int x, int y);
+
+
 	//Get the camera width.
 	int getWidth();
 	//Get the camera height.
@@ -45,12 +54,12 @@ public:
 	void render();
 
 	
-	enum MovementOption {CONSTANT_PAN_X, CONSTANT_PAN_Y, CENTER_OBJ, FIXED};
-
 private:
 	Environment* environment;
 	MovementOption option;
 
 	int pan_amount;
 	GameObject* center_obj;
+	int offset_x;
+	int offset_y;
 };
