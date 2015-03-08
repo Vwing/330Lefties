@@ -20,10 +20,13 @@ public:
 	void update();
 	void render();
 
+	void setEnvironment(Environment *newEnv);
+
 	bool isOver();
+	void quitGame();
 
 //	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
-	Sprite* createSprite(int width, int height, int xPos = 0, int yPos = 0);
+	Sprite* createSprite(std::string resPath, int width, int height, int xPos = 0, int yPos = 0);
 	Unit* addToEnvironment(Unit* gameObject);
 	// Character* addCharacter(Sprite* sprite, int HP);  < This should be game programmer stuff
 
@@ -41,4 +44,5 @@ private:
 
 	Environment *environment; // Contains all objects that are part of gameplay
 	Camera *camera; // Controls what gets seen in the environment
+
 };
