@@ -49,7 +49,7 @@ public:
 	int getY();
 
 
-	void handleEvent(SDL_Event sdlEvent);
+	void handleEvent(Uint32 sdlEvent);
 	void update();
 	void render();
 
