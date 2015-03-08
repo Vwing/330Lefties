@@ -1,6 +1,20 @@
 // TODO: code this
 #include "Sprite.h"
 #include <chrono>
+#include <SDL.h>
+#include <Windows.h>
+#include <iostream>
+#include <sstream>
+#include <SDL_image.h>
+
+
+SDL_Texture* loadSpriteTexture(const std::string &file, SDL_Renderer *ren){
+	SDL_Texture *texture = IMG_LoadTexture(ren, file.c_str());
+	if (texture == nullptr){
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "LoadTexture Error");
+	}
+	return texture;
+}
 
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, SDL_Rect dst,
 	SDL_Rect *clip = nullptr)
@@ -24,13 +38,39 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y,
 	renderTexture(tex, ren, dst, clip);
 }
 
-Sprite::Sprite(int width, int height, SDL_Renderer* ren, int xPos, int yPos, std::string start_seq){
-	body.width = width;
-	body.height = height;
-	renderer = ren;
+Sprite::Sprite(std::string filePath, SDL_Renderer* ren, int xPos, int yPos)
+: renderer(ren), current_seq("")
+{
 	body.xPos = xPos;
 	body.yPos = yPos;
-	current_seq = start_seq;
+	textures[filePath] = loadSpriteTexture(filePath, ren);
+	currentTexture = textures[filePath];
+	if (currentTexture == nullptr){
+		IMG_Quit();
+		SDL_Quit();
+		this->~Sprite();
+	}
+	SDL_QueryTexture(currentTexture, NULL, NULL, &body.width, &body.height);
+	makeFrame(currentTexture, xPos, yPos);
+}
+
+Sprite::Sprite(std::string filePath, SDL_Renderer* ren, int width, int height, int xPos, int yPos, std::string start_seq)
+: renderer(ren), current_seq(start_seq)
+{
+	body.width = width;
+	body.height = height;
+	body.xPos = xPos;
+	body.yPos = yPos;
+	if (filePath != ""){
+		SDL_Texture* texture = loadSpriteTexture(filePath, ren);
+		if (texture == nullptr){
+			IMG_Quit();
+			SDL_Quit();
+			this->~Sprite();
+		}
+		textures[filePath] = texture;
+		currentTexture = textures[filePath];
+	}
 }
 
 Sprite::~Sprite(void){
@@ -58,6 +98,22 @@ int Sprite::getX(){
 
 int Sprite::getY(){
 	return body.yPos;
+}
+
+void Sprite::setTexture(std::string filePath, SDL_Renderer* ren){
+	if (textures.count(filePath) == 0){
+		textures[filePath] = loadSpriteTexture(filePath, ren);
+	}
+	currentTexture = textures[filePath];
+}
+
+int Sprite::makeFrame(int x, int y){
+	frame f;
+	f.texture = currentTexture;
+	f.x = x;
+	f.y = y;
+	frames.push_back(f);
+	return frames.size() - 1;
 }
 
 int Sprite::makeFrame(SDL_Texture* texture, int x, int y){

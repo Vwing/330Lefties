@@ -1,13 +1,15 @@
 #pragma once
 
-#include "Unit.h"
+#include "GameObject.h"
 #include <vector>
 #include <map>
+#include "Unit.h"
 
 class Sprite : public Unit
 {
 public:
-	Sprite(int width, int height, SDL_Renderer* ren, int xPos = 0, int yPos = 0, std::string start_seq = "");
+	Sprite(std::string filePath, SDL_Renderer* ren, int xPos = 0, int yPos = 0);
+	Sprite(std::string filePath, SDL_Renderer* ren, int width, int height, int xPos = 0, int yPos = 0, std::string start_seq = "");
 	~Sprite(void);
 
 	void setPos(int x, int y);
@@ -16,8 +18,12 @@ public:
 	int getX();
 	int getY();
 
+	void setTexture(std::string filePath, SDL_Renderer* ren);
+
 	// makeFrame returns the unique index of the frame
+	int makeFrame(int x, int y);
 	int makeFrame(SDL_Texture* texture, int x, int y);
+
 
 	// addFrameToSequence returns the number of frames in the sequence after the add
 	//int addFrameToSequence(std::string seqName, int frameIndex);
@@ -37,6 +43,8 @@ protected:
 	SDL_Renderer* renderer;
 	std::string current_seq; // The name of the current sequence being displayed. Default is empty string.
 	unsigned long long frameStartTime;
+	std::map<std::string, SDL_Texture*> textures;
+	SDL_Texture* currentTexture;
 
 	struct frame
 	{
@@ -58,4 +66,3 @@ protected:
 	// Mapping of sequence names to pairs of (1. List of frames 2. Current sequence index)
 	//std::map<std::string, std::pair <std::vector<int>, unsigned int>> sequenceList;
 };
-
