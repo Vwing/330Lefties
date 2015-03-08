@@ -1,7 +1,7 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 #include "SDL.h"
-#include "GameObject.h"
+#include "Unit.h"
 #include <vector>
 
 class Physics{
@@ -13,7 +13,7 @@ public:
 
 	// Returns true if given game object is colliding with world bounds
 	// and moves the object back within the bounds. (<- should go in different function)
-	bool check_borders(GameObject* obj){ //constants can be replaced with variables
+	bool check_borders(Unit* obj){ //constants can be replaced with variables
 		if (obj->body.yPos + obj->body.height >= WORLD_HEIGHT){ //bottom
 			obj->body.yPos = WORLD_HEIGHT - obj->body.height;
 			return true;
@@ -42,27 +42,28 @@ public:
 		WORLD_WIDTH = width;
 	}
 
-	bool check_collision(GameObject* obj1, GameObject* obj2){
+	bool check_collision(Unit* obj1, Unit* obj2){
 		return !(obj2->body.xPos > obj1->body.xPos + obj1->body.width
 			|| obj2->body.xPos + obj2->body.width < obj1->body.xPos
 			|| obj2->body.yPos > obj1->body.yPos + obj1->body.height
 			|| obj2->body.yPos + obj2->body.height < obj1->body.yPos);
 	}
 
-	void gravity(GameObject* obj){ //
-		obj->body.xPos -= obj->body.gravity;
+	void gravity(Unit* obj){ 
+		// obj->body.xPos -= obj->body.gravity;
+		obj->body.xPos -= 1;
 	}
 
-	void update(GameObject* obj){
+	void update(Unit* obj){
 		check_borders(obj);
 		//check_collision has to be called from somewhere else
 		gravity(obj);
 	}
 
-	void update(std::vector<GameObject*> objects){
-		for (GameObject* o : objects)
+	void update(std::vector<Unit*> objects){
+		for (Unit* o : objects)
 		{
-			for (GameObject* p : objects)
+			for (Unit* p : objects)
 				check_collision(o, p);
 			check_borders(o);
 			gravity(o);
