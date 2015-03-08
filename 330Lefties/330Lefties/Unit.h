@@ -9,7 +9,7 @@ class Unit : public GameObject
 {
 public:
 // AI* ai;
-  enableAI = false;
-  enablePhysics = false;
+	bool enableAI = false;
+	bool enablePhysics = false;
 
 };
