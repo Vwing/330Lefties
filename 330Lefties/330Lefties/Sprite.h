@@ -1,10 +1,10 @@
 #pragma once
 
-#include "GameObject.h"
+#include "Unit.h"
 #include <vector>
 #include <map>
 
-class Sprite : public GameObject
+class Sprite : public Unit
 {
 public:
 	Sprite(int width, int height, SDL_Renderer* ren, int xPos = 0, int yPos = 0, std::string start_seq = "");
