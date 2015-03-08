@@ -2,13 +2,15 @@
 #include "Game.h"
 #include "SDL.h"
 
+
 Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 : windowWidth(windowWidth), windowHeight(windowHeight), xPos(xPos), yPos(yPos)
 {
 	quit = false;
-	camera = new Camera(windowWidth, windowHeight);
+	
 	// Environment will use window width and height as default until we implement scrolling
-	environment = new Environment(windowWidth, windowHeight, camera);
+	environment = new Environment(windowWidth, windowHeight);
+	camera = new Camera(windowWidth, windowHeight, environment);
 
 	// Load all resources
 	window = SDL_CreateWindow("Your Game", xPos, yPos, windowWidth,
@@ -39,21 +41,22 @@ void Game::update()
 	//EventManager::getInstance().handleEvents();
 	EventManager::getInstance().Update();
 
+	camera->update();
 	environment->update();
-
-	for (GameObject* o : allGameObjects)
-	{
-		o->update();
-	}
+	UI->update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	for (GameObject* o : allGameObjects)
-	{
-		o->render();
-	}
+
+	// Render only what the camera can see.  
+	// TO DO: Render things that are slightly off screen as well
+	camera->render();
+	
+	// Render all UI Elements
+	UI->render();
+
 	SDL_RenderPresent(renderer);
 }
 
@@ -68,18 +71,19 @@ Sprite* Game::addSprite(int width, int height, int xPos, int yPos)
 	return newSprite;
 }
 */
-Sprite* Game::loadSprite(int width, int height, int xPos, int yPos)
+Sprite* Game::createSprite(int width, int height, int xPos, int yPos)
 {
 	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos);
 	return newSprite;
 }
 
-GameObject* Game::addGameObject(GameObject* gameObject){
-	allGameObjects.push_back(gameObject);
+Unit* Game::addToEnvironment(Unit* gameObject){
 	environment->addObject(gameObject);
 	return gameObject;
 }
 
+
+/*
 Character* Game::addCharacter(Sprite* sprite, int HP){
 	Character* newChar = new Character(sprite, renderer, HP);
 
@@ -88,6 +92,7 @@ Character* Game::addCharacter(Sprite* sprite, int HP){
 	
 	return newChar;
 }
+*/
 
 bool Game::isOver()
 {
