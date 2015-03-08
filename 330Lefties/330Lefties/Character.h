@@ -1,11 +1,11 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
-#include "GameObject.h"
+#include "Unit.h"
 #include "Sprite.h"
 
-class Character : public GameObject{
+class Character : public Unit {
 public:
-	Character(Sprite* sprite, SDL_Renderer* ren, int startHP = 100);
+	Character(Sprite* sprite, int startHP = 100);
 	~Character(void);
 
 	//Increases or decreases HP given int

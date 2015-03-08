@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "EventManager.h"
 
-Character::Character(Sprite* sprite, SDL_Renderer* ren, int startHP){
+Character::Character(Sprite* sprite, int startHP){
 	this->sprite = sprite;
 	hp = startHP;
 	moveSeq.left = "walk left";
@@ -97,6 +97,7 @@ void Character::handleEvent(Uint32 sdlEvent){
 }
 
 void Character::update(){
+
 }
 
 void Character::render(){
