@@ -37,30 +37,37 @@ int Button::getButtonOver(){
 	return press.buttonOver;
 }
 
-void Button::handleEvent(Uint32 sdlEvent){
-	if (sdlEvent == SDL_MOUSEBUTTONUP || sdlEvent == SDL_MOUSEBUTTONDOWN || sdlEvent == SDL_MOUSEMOTION){
-		int x, y;
-		SDL_GetMouseState(&x, &y);
-		bool inside = true;
+//update() update whether the mouse is inside of the button space
+void Button::update(Uint32 sdlEvent){
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	inside = true;
+	if (x < body.xPos || x > body.xPos + body.width || y < body.yPos || y > body.yPos + body.height)
+		inside = false;
+}
 
-		if (x < body.xPos || x > body.xPos + body.width || y < body.yPos || y > body.yPos + body.height)
-			inside = false;
-		if (!inside){
-			sprite->show(getButtonUp());
+
+//render() will call show()
+	void Button::render(int buttonPos){
+		sprite->show(buttonPos);
+	}
+
+//handleEvent() could change the current frame being showed
+void Button::handleEvent(Uint32 sdlEvent){
+	if (!inside){
+		render(getButtonUp());
+	}
+	else{
+		if (sdlEvent == SDL_MOUSEBUTTONUP){
+			render(getButtonUp());
 		}
-		else{
-			if (sdlEvent == SDL_MOUSEBUTTONUP){
-				sprite->show(getButtonUp());
-			}
-			else if (sdlEvent == SDL_MOUSEMOTION){
-				sprite->show(getButtonOver());
-			}
-			else if (sdlEvent == SDL_MOUSEBUTTONDOWN){
-				sprite->show(getButtonDown());
-				functocall();
-			}
+		else if (sdlEvent == SDL_MOUSEMOTION){
+			render(getButtonOver());
+		}
+		else if (sdlEvent == SDL_MOUSEBUTTONDOWN){
+			render(getButtonDown());
+			functocall();
 		}
 	}
-	sprite->show(getButtonOver());
-
+	render(getButtonOver());
 }
