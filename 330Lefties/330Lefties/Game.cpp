@@ -55,8 +55,6 @@ Game::~Game()
 
 void Game::update()
 {
-	//	EventManager::getInstance().updateQueue();
-	//  EventManager::getInstance().handleEvents();
 	EventManager::getInstance().Update();
 
 	// Position the camera based on the current mode
@@ -64,7 +62,7 @@ void Game::update()
 	// Call update on all environment objects
 	environment->update();
 	// Call update on all UI objects
-	UI->update();
+	//UI->update(); //TechDemo: had to comment out for tech demo to compile
 }
 
 void Game::render()
@@ -76,7 +74,7 @@ void Game::render()
 	camera->render();
 	
 	// Render all UI Elements
-	UI->render();
+	//UI->render(); //TechDemo: Same as above update() method
 
 	SDL_RenderPresent(renderer);
 }

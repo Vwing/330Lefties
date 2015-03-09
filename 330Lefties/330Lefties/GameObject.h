@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include <string>
 
 class GameObject
 {
@@ -15,9 +16,11 @@ public:
 		int width;
 		int height;
 		int layer = 1;
+		std::string tag; //a tag identifying the type of object
 	};
-	
+
 	Body body; // Contains position and dimensions of object
+
 	virtual void update() = 0; // Updates the state of this game object - in main game loop
 	virtual void render() = 0; // Draws this game object onto the renderer - in main game loop
 

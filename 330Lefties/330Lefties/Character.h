@@ -26,8 +26,6 @@ public:
 	void render();
 
 private:
-	int x;
-	int y;
 	int hp;
 	int mass;
 	Sprite* sprite;

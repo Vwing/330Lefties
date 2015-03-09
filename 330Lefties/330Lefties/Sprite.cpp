@@ -125,6 +125,16 @@ int Sprite::makeFrame(SDL_Texture* texture, int x, int y){
 	return frames.size() - 1;
 }
 
+
+int Sprite::makeFrame(std::string filePath, int x, int y){
+	frame f;
+	f.texture = loadSpriteTexture(filePath, renderer);
+	f.x = x;
+	f.y = y;
+	frames.push_back(f);
+	return frames.size() - 1;
+}
+
 int Sprite::addFrameToSequence(std::string seqName, int frameIndex, unsigned int duration){
 	//sequenceList[seqName].first.push_back(frameIndex);
 	//return sequenceList[seqName].first.size();

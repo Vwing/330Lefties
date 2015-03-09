@@ -1,5 +1,7 @@
 #include "Camera.h"
+#include "Globals.h"
 #include <algorithm>
+#include <queue>
 
 Camera::Camera(int width, int height, Environment* env, int xPos, int yPos)
 {
@@ -18,11 +20,21 @@ Camera::Camera(int width, int height, Environment* env, int xPos, int yPos)
 	body.yPos = yPos;
 
 	option = FIXED;
-	pan_amount = 0;
+	pan_amount = -1;
 
 	environment = env;
 	offset_x = 0;
 	offset_y = 0;
+
+	//set camera movement option with these key presses
+	Global_RegisterForEvent(this, SDLK_o);
+	Global_RegisterForEvent(this, SDLK_f);
+	Global_RegisterForEvent(this, SDLK_x);
+	Global_RegisterForEvent(this, SDLK_y);	
+	Global_RegisterForEvent(this, SDLK_1);
+	Global_RegisterForEvent(this, SDLK_2);
+	Global_RegisterForEvent(this, SDLK_3);
+	Global_RegisterForEvent(this, SDLK_4);
 }
 
 Camera::~Camera(void){
@@ -160,41 +172,36 @@ void Camera::render() {
 
 		A higher layer means that object will be drawn later.
 	*/
+	class CompareGameObjects{
+	public:
+		bool operator()(GameObject* t1, GameObject* t2) //for use in a priority queue. Useful for rendering by layer.
+		{
+			if (t1->body.layer < t2->body.layer) return true;
+			else if (t1->body.layer == t2->body.layer && t1->body.width * t1->body.height < t2->body.width * t2->body.height)
+				return true; //same layer? Render larger object first.
+			return false;
+		}
+	};
+
 	std::vector<GameObject*>& objects = environment->objects;
 
-	std::vector<GameObject*> visible;
+	std::priority_queue<GameObject*, std::vector<GameObject*>, CompareGameObjects> visible;
 
-	for (int i=0; i<objects.size(); i++){
+	for (int i=0; i<objects.size(); ++i){
 		if(canSee(objects.at(i))){
-			visible.push_back(objects.at(i));
+			visible.push(objects.at(i));
 		}
 	}
 
-	int layer;
-	int index;
-
 	//loop through visible objects list
-	while(visible.size() > 0){
-		layer = visible.at(0)->body.layer;
-		index = 0;
-		//find lowest layer
-		for (int i=0; i<visible.size(); i++){
-			if (visible.at(i)->body.layer < layer){
-				layer = visible.at(i)->body.layer;
-				index = i;
-			}
-		}
-
-		//swap lowest layer element with the last element, then render and pop
-		std::swap(visible.back(),visible.at(index));
-
+	while(!visible.empty()){
 		//update screen coordinates of object
-		visible.back()->body.screenX = visible.back()->body.xPos - body.xPos;
-		visible.back()->body.screenY = visible.back()->body.yPos - body.yPos;
+		visible.top()->body.screenY = visible.top()->body.yPos - body.yPos;
+		visible.top()->body.screenX = visible.top()->body.xPos - body.xPos;
 
 		//objects hopefully render based on screen coordinates
-		visible.back()->render();
-		visible.pop_back();
+		visible.top()->render();
+		visible.pop();
 	}
 }
 
@@ -204,7 +211,24 @@ void Camera::handleEvent(Uint32 sdlEvent)
 		Implementation for events:
 
 		When and how should the camera move based on what input
-	*/
+		*/
+
+	if (sdlEvent == SDLK_f || sdlEvent == SDLK_1)
+	{
+		setMovementOption(FIXED);
+	}
+	else if (sdlEvent == SDLK_o || sdlEvent == SDLK_2)
+	{
+		setMovementOption(CENTER_OBJ);
+	}
+	else if (sdlEvent == SDLK_x || sdlEvent == SDLK_3)
+	{
+		setMovementOption(CONSTANT_PAN_X);
+	}
+	else if (sdlEvent == SDLK_y || sdlEvent == SDLK_4)
+	{
+		setMovementOption(CONSTANT_PAN_Y);
+	}
 }
 
 int Camera::getHeight(){
@@ -225,6 +249,17 @@ int Camera::getY(){
 
 void Camera::setMovementOption(MovementOption opt){
 	option = opt;
+}
+
+void Camera::setMovementOption(std::string opt){
+	if (opt == "FIXED")
+		option = FIXED;
+	if (opt == "CENTER_OBJ")
+		option = CENTER_OBJ;
+	if (opt == "PAN_X")
+		option = CONSTANT_PAN_X;
+	if (opt == "PAN_Y")
+		option = CONSTANT_PAN_Y;
 }
 
 void Camera::setOffset(int x, int y){

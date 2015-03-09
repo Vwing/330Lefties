@@ -4,6 +4,8 @@
 
 Character::Character(Sprite* sprite, int startHP){
 	this->sprite = sprite;
+	body.xPos = sprite->body.xPos;
+	body.yPos = sprite->body.yPos;
 	hp = startHP;
 	moveSeq.left = "walk left";
 	moveSeq.right = "walk right";
@@ -14,6 +16,7 @@ Character::Character(Sprite* sprite, int startHP){
 	Global_RegisterForEvent(this, SDLK_RIGHT);
 	Global_RegisterForEvent(this, SDLK_LEFT);
 	Global_RegisterForEvent(this, SDLK_UP);
+	Global_RegisterForEvent(this, SDLK_DOWN);
 }
 
 Character::~Character(void){
@@ -43,61 +46,54 @@ void Character::changeSequenceName(std::string movementType, std::string seq){
 }
 
 void Character::moveLeft(unsigned int distance){
-	sprite->movex(-1 * distance);
+	body.xPos -= distance;
+	//sprite->movex(-1 * distance);
 	sprite->changeSequence(moveSeq.left);
 }
 
 void Character::moveRight(unsigned int distance){
-	sprite->movex(distance);
+	body.xPos += distance;
+	//sprite->movex(distance);
 	sprite->changeSequence(moveSeq.right);
 }
 
 void Character::jump(unsigned int distance){
-	sprite->movey(-1 * distance);
+	body.yPos -= distance;
+	//sprite->movey(-1 * distance);
 	sprite->changeSequence(moveSeq.jump);
 }
 
 void Character::fall(unsigned int distance){
-	sprite->movey(distance);
+	body.yPos += distance;
+	//sprite->movey(distance);
 	sprite->changeSequence(moveSeq.fall);
 }
-
-/*
-void Character::handleEvent(SDL_Event sdlEvent){
-	if (sdlEvent.type == SDL_KEYDOWN){
-		if (sdlEvent.key.keysym.sym == SDLK_RIGHT)
-		{
-			moveRight(5);
-		}
-		else if (sdlEvent.key.keysym.sym == SDLK_LEFT)
-		{
-			moveLeft(5);
-		}
-		else if (sdlEvent.key.keysym.sym == SDLK_UP)
-		{
-			jump(5);
-		}
-	}
-}
-*/
 
 void Character::handleEvent(Uint32 sdlEvent){
 	if (sdlEvent == SDLK_RIGHT)
 	{
-			moveRight(5);
+		moveRight(5);
 	}
 	else if (sdlEvent == SDLK_LEFT)
 	{
-			moveLeft(5);
+		moveLeft(5);
 	}
 	else if (sdlEvent == SDLK_UP)
 	{
-			jump(5);
+		jump(5);
+	}
+	else if (sdlEvent == SDLK_DOWN)
+	{
+		fall(5);
 	}
 }
 
 void Character::update(){
-
+	sprite->body.xPos = body.xPos;
+	sprite->body.yPos = body.yPos;
+	sprite->body.screenX = body.screenX;
+	sprite->body.screenY = body.screenY;
+	sprite->body.layer = body.layer;
 }
 
 void Character::render(){

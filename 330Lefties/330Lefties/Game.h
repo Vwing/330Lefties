@@ -34,6 +34,7 @@ public:
 	SDL_Renderer *renderer;
 
 	UI* UI;
+	Camera *camera; // Controls what gets seen in the environment
 
 private:
 
@@ -43,6 +44,5 @@ private:
 	bool quit;
 
 	Environment *environment; // Contains all objects that are part of gameplay
-	Camera *camera; // Controls what gets seen in the environment
 
 };

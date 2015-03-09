@@ -23,6 +23,7 @@ public:
 	// makeFrame returns the unique index of the frame
 	int makeFrame(int x, int y);
 	int makeFrame(SDL_Texture* texture, int x, int y);
+	int makeFrame(std::string filePath, int x, int y);
 
 
 	// addFrameToSequence returns the number of frames in the sequence after the add
