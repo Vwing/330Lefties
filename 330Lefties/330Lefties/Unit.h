@@ -12,5 +12,4 @@ public:
 // AI* ai;
 	bool enableAI = false;
 	bool enablePhysics = false;
-	std::vector<Unit*> colliding;
 };
