@@ -2,24 +2,24 @@
 
 UI::UI()
 {
-
+	
 }
 
 UI::~UI()
 {
-
+	elements.clear();
 }
 
 // Add button by creating a new sprite with params
-/*
-Button* UI::addButton(std::string filePath, int width, int height, int xPos = 0, int yPos = 0)
+Button* UI::addButton(std::function<void(void)> funcToCall, std::string filePath, int width, int height, int xPos = 0, int yPos = 0)
 {
-	Button* newButton = new Button(filePath, width, height, xPos, yPos);
+	Button* newButton = new Button(funcToCall, new Sprite(filePath, width, height, xPos, yPos));
 	elements.push_back(newButton);
 	return newButton;
 }
 
 // Add button using existing sprite
+/*
 Button* UI::addButton(Sprite* sprite)
 {
 	Button* newButton = new Button(sprite);
