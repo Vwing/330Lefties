@@ -16,7 +16,7 @@ bool check_borders(Unit* obj){
 	return (obj->body.yPos + obj->body.height >= WORLD_HEIGHT //bottom
 	|| obj->body.yPos <= 0 //top
 	|| obj->body.xPos + obj->body.width >= WORLD_WIDTH //right
-	|| obj->body.xPos <= 0) //left
+	|| obj->body.xPos <= 0); //left
 	}
 
 void set_world(int width, int height){
