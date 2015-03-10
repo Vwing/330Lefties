@@ -27,13 +27,13 @@ void Button::onButtonOver(int frameNum){
 }
 
 int Button::getButtonDown(){
-	return states.buttonDown;
+	return states.BUTTON_DOWN;
 }
 int Button::getButtonUp(){
-	return states.buttonUp;
+	return states.BUTTON_UP;
 }
 int Button::getButtonOver(){
-	return states.buttonOver;
+	return states.BUTTON_OVER;
 }
 
 //update() update whether the mouse is inside of the button space
