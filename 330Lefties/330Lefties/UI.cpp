@@ -2,7 +2,7 @@
 
 UI::UI()
 {
-	
+	elements = new std::vector<UI_Element*>();	
 }
 
 UI::~UI()
