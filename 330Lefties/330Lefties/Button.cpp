@@ -1,13 +1,10 @@
 #include <iostream>
 #include <sstream>
-#include <vector>
-#include <map>
 #include <Windows.h>
 #include <SDL.h>
+#include <functional>
 #include "SDL_image.h"
 #include "Button.h"
-#include <windows.h>
-#include <functional>
 #include "Sprite.h"
 
 
@@ -18,56 +15,55 @@ Button::Button(std::function<void(void)> functocall, Sprite* sprite)
 }
 
 void Button::onButtonDown(int frameNum){
-	press.buttonDown = frameNum;
+	states.BUTTON_DOWN = frameNum;
 }
 void Button::onButtonUp(int frameNum){
-	press.buttonUp = frameNum;
+	states.BUTTON_UP = frameNum;
 }
 void Button::onButtonOver(int frameNum){
-	press.buttonOver = frameNum;
+	states.BUTTON_OVER = frameNum;
 }
 
 int Button::getButtonDown(){
-	return press.buttonDown;
+	return states.buttonDown;
 }
 int Button::getButtonUp(){
-	return press.buttonUp;
+	return states.buttonUp;
 }
 int Button::getButtonOver(){
-	return press.buttonOver;
+	return states.buttonOver;
 }
 
 //update() update whether the mouse is inside of the button space
-void Button::update(Uint32 sdlEvent){
+void Button::update(){
 	int x, y;
 	SDL_GetMouseState(&x, &y);
-	inside = true;
-	if (x < body.xPos || x > body.xPos + body.width || y < body.yPos || y > body.yPos + body.height)
-		inside = false;
+	
+	if (x > body.xPos && x < body.xPos + body.width && y > body.yPos && y < body.yPos + body.height)
+	{
+		BUTTON_OVER = true;
+	}
+	else
+	{
+		BUTTON_OVER = false;
+	}
 }
 
 
 //render() will call show()
-	void Button::render(int buttonPos){
-		sprite->show(buttonPos);
-	}
+void Button::render(){
+	sprite->show(currState);
+}
 
 //handleEvent() could change the current frame being showed
 void Button::handleEvent(Uint32 sdlEvent){
-	if (!inside){
-		render(getButtonUp());
-	}
-	else{
+	if (BUTTON_OVER){
 		if (sdlEvent == SDL_MOUSEBUTTONUP){
-			render(getButtonUp());
-		}
-		else if (sdlEvent == SDL_MOUSEMOTION){
-			render(getButtonOver());
+			currState = states.BUTTON_UP;
 		}
 		else if (sdlEvent == SDL_MOUSEBUTTONDOWN){
-			render(getButtonDown());
+			currState = states.BUTTON_DOWN;
 			functocall();
 		}
 	}
-	render(getButtonOver());
 }
