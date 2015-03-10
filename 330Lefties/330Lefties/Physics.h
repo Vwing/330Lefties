@@ -32,7 +32,7 @@ bool check_collision(Unit* obj1, Unit* obj2){
 	}
 
 int magnitude(Unit* obj){
-	return obj->width * obj->height;
+	return obj->body.width * obj->body.height;
 	}
 
 void gravity(Unit* obj){
