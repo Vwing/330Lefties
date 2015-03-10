@@ -2,7 +2,7 @@
 
 UI::UI()
 {
-	elements = new std::vector<UI_Element*>();	
+	//elements = new std::vector<UI_Element*>();	
 }
 
 UI::~UI()
@@ -11,22 +11,22 @@ UI::~UI()
 }
 
 // Add button by creating a new sprite with params
+/*
 Button* UI::addButton(std::function<void(void)> funcToCall, std::string filePath, int width, int height, int xPos = 0, int yPos = 0)
 {
 	Button* newButton = new Button(funcToCall, new Sprite(filePath, width, height, xPos, yPos));
 	elements.push_back(newButton);
 	return newButton;
 }
+*/
 
 // Add button using existing sprite
-/*
-Button* UI::addButton(Sprite* sprite)
+Button* UI::addButton(std::function<void(void)> funcToCall, Sprite* sprite)
 {
-	Button* newButton = new Button(sprite);
+	Button* newButton = new Button(funcToCall, sprite);
 	elements.push_back(newButton);
 	return newButton;
 }
-*/
 
 void UI::handleEvent(Uint32 sdlEvent)
 {
