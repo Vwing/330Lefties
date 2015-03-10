@@ -1,9 +1,10 @@
 #pragma once
 #include "Mobile_Platform.h"
 
-Mobile_Platform::Mobile_Platform(Sprite* s)
+Mobile_Platform::Mobile_Platform(Sprite* s, std::string seq)
 {
 	sprite = s;
+	currentseq = seq;
 }
 
 Mobile_Platform::~Mobile_Platform()
