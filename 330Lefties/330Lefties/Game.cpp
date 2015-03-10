@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include "SDL.h"
+#include "Globals.h"
 #include <SDL_image.h>
 
 #include <cleanup.h>
@@ -43,6 +44,9 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 	*/
 	environment = new Environment(windowWidth, windowHeight);
 	camera = new Camera(windowWidth, windowHeight, environment);
+
+	Global_RegisterForEvent(this, SDLK_ESCAPE);
+	Global_RegisterForEvent(this, SDL_WINDOWEVENT_CLOSE);
 }
 
 Game::~Game()
@@ -51,6 +55,14 @@ Game::~Game()
 	delete environment, camera;
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void Game::handleEvent(Uint32 sdlEvent)
+{
+	if (sdlEvent == SDLK_ESCAPE || sdlEvent == SDL_WINDOWEVENT_CLOSE)
+	{
+		quitGame();
+	}
 }
 
 void Game::update()

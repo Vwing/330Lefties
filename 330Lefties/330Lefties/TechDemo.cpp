@@ -7,7 +7,7 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-Sprite* AddSpritesToPlayerCharacter(std::string resPath, Game* game)
+Sprite* MakeSprite(std::string resPath, Game* game)
 {
 	Sprite* sprite1 = game->createSprite(resPath + "player.png", 95, 130);
 	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(0, 0), 100);
@@ -45,14 +45,18 @@ int main(int argc, char **argv){
 	int bgFrame = spriteBG->makeFrame(0, 0);
 	game->addToEnvironment(spriteBG);
 
-	Sprite* sprite1 = AddSpritesToPlayerCharacter(resPath, game);
+	Sprite* sprite1 = MakeSprite(resPath, game);
+	Sprite* sprite2 = MakeSprite(resPath, game);
 
 	int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
 	int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
 	sprite1->setPos(x, y);
+	sprite2->setPos(x + sprite2->body.width, y);
 
 	Character* guy = new Character(sprite1, 100);
+	Character* guy2 = new Character(sprite2, 100);
 	game->addToEnvironment(guy);
+	game->addToEnvironment(guy2);
 	camera->setCenterObject(guy);
 
 	while (!game->isOver()){

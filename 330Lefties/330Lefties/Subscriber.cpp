@@ -25,5 +25,3 @@ Subscriber::Subscriber(Subscriber &other){
 void Subscriber::HandleRegisteredEvent(Uint32 e){
 	owner->handleEvent(e);
 }
-
-

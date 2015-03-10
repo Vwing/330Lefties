@@ -11,7 +11,7 @@
 #include "UI_Element.h"
 #include "UI.h"
 
-class Game
+class Game : GameObject
 {
 public:
 	Game(int windowWidth, int windowHeight, int xPos = 0, int yPos = 0);
@@ -19,6 +19,7 @@ public:
 
 	void update();
 	void render();
+	void handleEvent(Uint32 sdlEvent);
 
 	void setEnvironment(Environment *newEnv);
 
