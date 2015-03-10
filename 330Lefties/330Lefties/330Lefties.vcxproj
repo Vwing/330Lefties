@@ -22,12 +22,16 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Mobile_Platform.h" />
+    <ClInclude Include="NameTextBox.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="PortraitTextBox.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Subscriber.h" />
+    <ClInclude Include="TextBox.h" />
+    <ClInclude Include="TextBoxResource.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="Unit.h" />
@@ -43,13 +47,17 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mobile_Platform.cpp" />
+    <ClCompile Include="NameTextBox.cpp" />
     <ClCompile Include="oldMain.cpp" />
+    <ClCompile Include="PortraitTextBox.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundDemo.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Subscriber.cpp" />
     <ClCompile Include="TechDemo.cpp" />
+    <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="TextyDemo.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -14,7 +14,7 @@ void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1,
 	moveFrames.push_back(frame3);
 	for (int frameNum : moveFrames)
 		for (int i = 0; i < 10; i++)
-			sprite1->addFrameToSequence(sequence, frameNum);
+			sprite1->addFrameToSequence(sequence, frameNum, 2);
 }
 
 const int SCREEN_WIDTH = 640;
@@ -41,19 +41,19 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 	frame2 = sprite1->makeFrame(32, 96);
 	frame3 = sprite1->makeFrame(64, 96);
 	helperAddMToMoveSequence(sprite1, "walk up", frame1, frame2, frame3);
-	
+
 	return sprite1;
 }
 
-bool vHeld = false;
-
-void handleEvent(Uint32 sdlEvent)
-{
-	if (sdlEvent == SDLK_v)
-	{
-		vHeld = true;
-	}
-}
+//bool vHeld = false;
+//
+//void handleEvent(Uint32 sdlEvent)
+//{
+//	if (sdlEvent == SDLK_v)
+//	{
+//		vHeld = true;
+//	}
+//}
 
 int main(int argc, char **argv){
 
@@ -82,14 +82,11 @@ int main(int argc, char **argv){
 	game->addToEnvironment(guy2);
 	camera->setCenterObject(guy);
 
-	while (!game->isOver()){
-		if (vHeld)
-			guy2->setPos(x, y);
-		vHeld = false;
+	while (!game->isOver())
+	{
 		game->update();
 		//Render the scene
 		game->render();
-
 	}
 
 
