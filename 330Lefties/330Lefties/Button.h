@@ -7,10 +7,10 @@
 #include "Sprite.h"
 #include "UI_Element.h"
 
-struct ButtonPress{
-	int buttonOver = 0;
-	int buttonUp = 1;
-	int buttonDown = 2;
+struct ButtonStates{
+	int BUTTON_UP = 0;
+	int BUTTON_DOWN = 1;
+	int BUTTON_OVER = 2;
 };
 
 class Button : public UI_Element{
@@ -18,8 +18,8 @@ public:
 	Button(std::function<void(void)> functocall, Sprite* sprite);
 	//update() update whether the mouse is inside of the button space, render() will call show() and handleEvent() could change the current frame being showed
 	void handleEvent(Uint32 sdlEvent);
-	void update(Uint32 sdlEvent);
-	void render(int buttonPos);
+	void update();
+	void render();
 	void onButtonDown(int frameNum); // Change frame for Button Down
 	void onButtonUp(int frameNum); // Change frame for Button Up
 	void onButtonOver(int frameNum); // Change frame for Button Over
@@ -29,6 +29,7 @@ public:
 private:
 	std::function<void(void)> functocall;
 	Sprite* sprite;
-	ButtonPress press;
-	bool inside;
+	ButtonStates states;
+	int currState;
+	bool BUTTON_OVER;
 };
