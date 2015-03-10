@@ -3,12 +3,13 @@
 #include "random"
 #include "time.h"
 
-BasicNPC::BasicNPC(Sprite* sprt)
+BasicNPC::BasicNPC(Sprite* sprt, std::string h)
 {
 	s = sprt;
 	x = s->getX();
 	y = s->getY();
 	srand(time(NULL));
+	currentseq = h;
 }
 
 BasicNPC::~BasicNPC()
