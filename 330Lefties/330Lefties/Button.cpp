@@ -12,6 +12,8 @@ Button::Button(std::function<void(void)> functocall, Sprite* sprite)
 {
 	this->functocall = functocall;
 	this->sprite = sprite;
+	
+	currState = states.BUTTON_UP;
 }
 
 void Button::onButtonDown(int frameNum){
@@ -42,10 +44,12 @@ void Button::update(){
 	if (x > body.xPos && x < body.xPos + body.width && y > body.yPos && y < body.yPos + body.height)
 	{
 		BUTTON_OVER = true;
+		currState = states.BUTTON_OVER;
 	}
 	else
 	{
 		BUTTON_OVER = false;
+		currState = states.BUTTON_UP;
 	}
 }
 
