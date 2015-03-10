@@ -5,7 +5,7 @@ class BasicNPC : public NPC
 {
 public:
 	std::string currentseq = "";
-	BasicNPC(Sprite* sprite);
+	BasicNPC(Sprite* sprite,std::string h);
 	~BasicNPC();
 	void update();
 	void render();
