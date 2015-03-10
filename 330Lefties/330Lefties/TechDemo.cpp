@@ -2,6 +2,7 @@
 #include <sstream>
 #include <Windows.h>
 #include "res_path.h"
+#include "Globals.h"
 #include "Game.h"
 
 const int SCREEN_WIDTH = 640;
@@ -33,6 +34,16 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 	return sprite1;
 }
 
+bool vHeld = false;
+
+void handleEvent(Uint32 sdlEvent)
+{
+	if (sdlEvent == SDLK_v)
+	{
+		vHeld = true;
+	}
+}
+
 int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
@@ -55,15 +66,19 @@ int main(int argc, char **argv){
 
 	Character* guy = new Character(sprite1, 100);
 	Character* guy2 = new Character(sprite2, 100);
+	Global_RegisterForEvent(guy2, SDLK_v);
 	game->addToEnvironment(guy);
 	game->addToEnvironment(guy2);
 	camera->setCenterObject(guy);
 
 	while (!game->isOver()){
-
+		if (vHeld)
+			guy2->setPos(x, y);
+		vHeld = false;
 		game->update();
 		//Render the scene
 		game->render();
+
 	}
 
 
