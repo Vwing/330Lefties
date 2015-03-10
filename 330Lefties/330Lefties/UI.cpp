@@ -35,15 +35,15 @@ void UI::handleEvent(Uint32 sdlEvent)
 
 void UI::update()
 {
-	for (UI_Element* el : elements)
+	for (int i = 0; i < elements.size(); i++)
 	{
-		el->update();
+		elements[i]->update();
 	}
 }
 void UI::render()
 {
-	for (UI_Element* el : elements)
+	for (int i = 0; i < elements.size(); i++)
 	{
-		el->render();
+		elements[i]->render();
 	}
 }
