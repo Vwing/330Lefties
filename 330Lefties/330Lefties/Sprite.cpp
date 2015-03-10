@@ -62,20 +62,22 @@ Sprite::Sprite(std::string filePath, SDL_Renderer* ren, int width, int height, i
 	body.xPos = xPos;
 	body.yPos = yPos;
 	if (filePath != ""){
-		SDL_Texture* texture = loadSpriteTexture(filePath, ren);
-		if (texture == nullptr){
+		textures[filePath] = loadSpriteTexture(filePath, ren);
+		currentTexture = textures[filePath];
+		if (currentTexture == nullptr){
 			IMG_Quit();
 			SDL_Quit();
 			this->~Sprite();
 		}
-		textures[filePath] = texture;
-		currentTexture = textures[filePath];
 	}
 }
 
 Sprite::~Sprite(void){
 	for (unsigned int i = 0; i < frames.size(); ++i){
 		SDL_DestroyTexture(frames[i].texture);
+	}
+	for (auto texture : textures){
+		SDL_DestroyTexture(texture.second);
 	}
 }
 
@@ -102,7 +104,14 @@ int Sprite::getY(){
 
 void Sprite::setTexture(std::string filePath, SDL_Renderer* ren){
 	if (textures.count(filePath) == 0){
-		textures[filePath] = loadSpriteTexture(filePath, ren);
+		SDL_Texture* texture = loadSpriteTexture(filePath, ren);
+		if (texture != nullptr){
+			textures[filePath] = texture;
+		}
+		else{
+			IMG_Quit();
+			SDL_Quit();
+		}
 	}
 	currentTexture = textures[filePath];
 }
