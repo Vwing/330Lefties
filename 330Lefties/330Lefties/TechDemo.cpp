@@ -5,31 +5,42 @@
 #include "Globals.h"
 #include "Game.h"
 
+
+void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1, int frame2, int frame3){
+	std::vector<int> moveFrames;
+	moveFrames.clear();
+	moveFrames.push_back(frame1);
+	moveFrames.push_back(frame2);
+	moveFrames.push_back(frame3);
+	for (int frameNum : moveFrames)
+		for (int i = 0; i < 10; i++)
+			sprite1->addFrameToSequence(sequence, frameNum);
+}
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-
 Sprite* MakeSprite(std::string resPath, Game* game)
 {
-	Sprite* sprite1 = game->createSprite(resPath + "player.png", 95, 130);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(0, 0), 100);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(95, 0), 100);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(190, 0), 100);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(285, 0), 100);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(380, 0), 100);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(475, 0), 100);
-	sprite1->addFrameToSequence("walk right", sprite1->makeFrame(570, 0), 100);
+	Sprite* sprite1 = game->createSprite(resPath + "Fey.png", 32, 32);
+	int frame1 = sprite1->makeFrame(0, 0);
+	int frame2 = sprite1->makeFrame(32, 0);
+	int frame3 = sprite1->makeFrame(64, 0);
+	helperAddMToMoveSequence(sprite1, "walk down", frame1, frame2, frame3);
 
-	sprite1->addFrameToSequence("walk left", sprite1->makeFrame(570, 260), 100);
-	sprite1->setTexture(resPath + "Up.png", game->renderer);
-	sprite1->addFrameToSequence("walk up", sprite1->makeFrame(0, 0), 100);
-	sprite1->setTexture(resPath + "Down.png", game->renderer);
-	for (int i = 0; i<13; i++)
-	{
-		for (int j = 0; j<5; j++)
-		{
-			sprite1->addFrameToSequence("walk down", sprite1->makeFrame(0, i * 130), 100);
-		}
-	}
+	frame1 = sprite1->makeFrame(0, 32);
+	frame2 = sprite1->makeFrame(32, 32);
+	frame3 = sprite1->makeFrame(64, 32);
+	helperAddMToMoveSequence(sprite1, "walk left", frame1, frame2, frame3);
+
+	frame1 = sprite1->makeFrame(0, 64);
+	frame2 = sprite1->makeFrame(32, 64);
+	frame3 = sprite1->makeFrame(64, 64);
+	helperAddMToMoveSequence(sprite1, "walk right", frame1, frame2, frame3);
+
+	frame1 = sprite1->makeFrame(0, 96);
+	frame2 = sprite1->makeFrame(32, 96);
+	frame3 = sprite1->makeFrame(64, 96);
+	helperAddMToMoveSequence(sprite1, "walk up", frame1, frame2, frame3);
 	
 	return sprite1;
 }
