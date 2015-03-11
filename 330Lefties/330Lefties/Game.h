@@ -10,6 +10,8 @@
 #include "Character.h"
 #include "UI_Element.h"
 #include "UI.h"
+#include "SDL_mixer.h"
+#include "Sound.h"
 
 class Game : GameObject
 {

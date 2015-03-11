@@ -20,6 +20,13 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 		quit = true;
 	}
 
+	// Initialize SDL_mixer
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	{
+		SDL_LogError(SDL_LOG_CATEGORY_ERROR, Mix_GetError());
+		quit = true;
+	}
+
 	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG){
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "IMG_Init");
 		quit = true;
