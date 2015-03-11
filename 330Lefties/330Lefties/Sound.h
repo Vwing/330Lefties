@@ -40,6 +40,12 @@ public:
 	// Set the volume of the sound from 0 - 128
 	void volume(int vol);
 
+	// Pause the sound on this channel or pass true to pause all
+	void pause(bool all_sounds = false);
+
+	// Resume the sound on this channel or pass true to resume all
+	void resume(bool all_sounds = false);
+
 private:
 	// Error message function
 	void yikes(std::string message);

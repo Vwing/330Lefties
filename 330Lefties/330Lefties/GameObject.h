@@ -34,5 +34,5 @@ public:
 
 	virtual void handleEvent(Uint32 sdlEvent) = 0; // Called by event manager if this object is subscribed to 'sdlEvent'
 
-	std::map<std::string, Sound> sounds;
+	std::map<std::string, Sound> sounds; // All game objects sounds will be stored within this sound map
 };

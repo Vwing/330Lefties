@@ -3,9 +3,7 @@
 #include "Sound.h"
 
 Sound::Sound()
-{
-
-}
+{}
 
 Sound::Sound(std::string path, bool is_effect)
 {
@@ -40,14 +38,15 @@ Sound::~Sound()
 	{
 		Mix_FreeChunk(effect);
 	}
+	Mix_Quit();
 }
 
 void Sound::yikes(std::string message)
 {
-	//std::ostringstream errMsg;
-	//errMsg << "message: " << message << std::endl;
-	//OutputDebugString(errMsg.str().c_str());
-	//std::cout << message << std::endl;
+	std::ostringstream errMsg;
+	errMsg << "message: " << message << std::endl;
+	OutputDebugString(errMsg.str().c_str());
+	std::cout << message << std::endl;
 	printf(message.c_str());
 
 	Mix_Quit();
@@ -103,25 +102,6 @@ void Sound::play()
 				yikes(("Failed to play effect! SDL_mixer Error: %s\n", Mix_GetError()));
 			}
 		}
-
-		//if (my_channel == -1)
-		//{
-		//	// Play sound effect
-		//	my_channel = Mix_PlayChannel(-1, effect, 0);
-		//	if (my_channel == -1)
-		//	{
-		//		exit(1);
-		//	}
-		//}
-		//else if (Mix_Playing(my_channel) == 0)
-		//{
-		//	// Play sound effect
-		//	my_channel = Mix_PlayChannel(-1, effect, 0);
-		//	if (my_channel == -1)
-		//	{
-		//		exit(1);
-		//	}
-		//}
 	}
 }
 
@@ -154,7 +134,7 @@ void Sound::setChannel(int channel)
 
 int Sound::getChannel()
 {
-	return my_channel;
+	return get_channel;
 }
 
 void Sound::volume(int vol)
@@ -169,6 +149,28 @@ void Sound::volume(int vol)
 	}
 }
 
+void Sound::pause(bool all_sounds)
+{
+	if (all_sounds)
+	{
+		Mix_Pause(-1);
+	}
+	else if (get_channel != -1)
+	{
+		Mix_Pause(get_channel);
+	}
+}
 
+void Sound::resume(bool all_sounds)
+{
+	if (all_sounds)
+	{
+		Mix_Resume(-1);
+	}
+	else if (get_channel != -1)
+	{
+		Mix_Resume(get_channel);
+	}
+}
 
 
