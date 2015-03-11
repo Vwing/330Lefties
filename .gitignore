@@ -158,3 +158,11 @@ FakesAssemblies/
 *.plg
 # Visual Studio 6 workspace options file
 330Lefties/330Lefties.sdf
+*.sdf
+*.log
+*.sdf
+*.idb
+*.pdb
+330Lefties/Debug/330Lefties.exe
+*.ilk
+*.pdb
