@@ -103,7 +103,7 @@ void Game::render()
 void Game::setEnvironment(Environment *newEnv)
 {
 	camera->setEnvironment(newEnv);
-	physics->set_world(newEnv->getWidth, newEnv->getHeight);
+	physics->set_world(newEnv->getWidth(), newEnv->getHeight());
 }
 
 /*
