@@ -51,6 +51,7 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 	*/
 	environment = new Environment(windowWidth, windowHeight);
 	camera = new Camera(windowWidth, windowHeight, environment);
+	physics = new Physics(windowWidth, windowHeight);
 
 	Global_RegisterForEvent(this, SDLK_ESCAPE);
 	Global_RegisterForEvent(this, SDL_WINDOWEVENT_CLOSE);
@@ -59,7 +60,7 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 Game::~Game()
 {
 	cleanup(window, renderer);
-	delete environment, camera;
+	delete environment, camera, physics;
 	IMG_Quit();
 	SDL_Quit();
 	Mix_Quit();
@@ -102,6 +103,7 @@ void Game::render()
 void Game::setEnvironment(Environment *newEnv)
 {
 	camera->setEnvironment(newEnv);
+	physics->set_world(newEnv->getWidth, newEnv->getHeight);
 }
 
 /*

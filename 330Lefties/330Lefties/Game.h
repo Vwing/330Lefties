@@ -38,6 +38,7 @@ public:
 
 	UI* UI;
 	Camera *camera; // Controls what gets seen in the environment
+	Physics* physics;
 
 private:
 
