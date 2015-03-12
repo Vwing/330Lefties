@@ -5,6 +5,7 @@
 Sound::Sound()
 {}
 
+// Constuctor to set sound. Pass false for background music
 Sound::Sound(std::string path, bool is_effect)
 {
 	my_path = path;
@@ -28,6 +29,7 @@ Sound::Sound(std::string path, bool is_effect)
 	}
 }
 
+// Destructor - free music or effect
 Sound::~Sound()
 {
 	if (music != NULL)
@@ -38,9 +40,9 @@ Sound::~Sound()
 	{
 		Mix_FreeChunk(effect);
 	}
-	Mix_Quit();
 }
 
+// Error message function
 void Sound::yikes(std::string message)
 {
 	std::ostringstream errMsg;
@@ -54,6 +56,7 @@ void Sound::yikes(std::string message)
 	exit(1);
 }
 
+// Set is_clip to false to load level music
 void Sound::setPath(std::string path, bool is_clip)
 {
 	my_path = path;
@@ -77,6 +80,7 @@ void Sound::setPath(std::string path, bool is_clip)
 	}
 }
 
+// Play the sound without any overlap
 void Sound::play()
 {
 	if (music != NULL)
@@ -104,6 +108,7 @@ void Sound::play()
 	}
 }
 
+// Play the effect and interupt if it is already playing
 void Sound::playInterupt()
 {
 	if (Mix_Playing(my_channel) == 1)
@@ -124,22 +129,26 @@ void Sound::playInterupt()
 	}
 }
 
+// Select a specific channel to play the effect
 void Sound::setChannel(int channel)
 {
 	my_channel = channel;
 	my_volume = Mix_Volume(my_channel, -1);
 }
 
+// Returns the current channel this sound is played on
 int Sound::getChannel()
 {
 	return my_channel;
 }
 
+// Returns the current volume for this channel
 int Sound::getVolume()
 {
 	return my_volume;
 }
 
+// Set the volume of the sound from 0 - 128. Pass true for all volume
 void Sound::volume(int vol, bool all_sounds)
 {
 	if (vol < 0)
@@ -170,6 +179,7 @@ void Sound::volume(int vol, bool all_sounds)
 	
 }
 
+// Pause the sound on this channel or pass true to pause all
 void Sound::pause(bool all_sounds)
 {
 	if (all_sounds)
@@ -186,6 +196,7 @@ void Sound::pause(bool all_sounds)
 	}
 }
 
+// Resume the sound on this channel or pass true to resume all
 void Sound::resume(bool all_sounds)
 {
 	if (all_sounds)

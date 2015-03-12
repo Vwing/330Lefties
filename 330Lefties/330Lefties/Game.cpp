@@ -62,6 +62,7 @@ Game::~Game()
 	delete environment, camera;
 	IMG_Quit();
 	SDL_Quit();
+	Mix_Quit();
 }
 
 void Game::handleEvent(Uint32 sdlEvent)

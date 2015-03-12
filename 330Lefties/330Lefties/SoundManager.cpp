@@ -1,7 +1,17 @@
 #include "SoundManager.h"
 
 SoundManager::~SoundManager()
-{}
+{
+	// Cleanup pointers to sounds
+	for (std::map<std::string, Sound*>::iterator iter = sounds.begin(); iter != sounds.end(); iter++)
+	{
+		delete iter->second;
+	}
+	if (music != nullptr)
+	{
+		delete music;
+	}
+}
 
 // Set background music
 void SoundManager::setMusic(std::string path)

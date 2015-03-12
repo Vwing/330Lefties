@@ -19,7 +19,7 @@ public:
 	// Destructor
 	~Sound();
 
-	// Set is_clip to false to load level music
+	// Set is_clip to false to load background music
 	Sound(std::string path, bool is_effect = true); 
 	
 	// Set is_clip to false to load level music
