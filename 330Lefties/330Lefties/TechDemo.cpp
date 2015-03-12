@@ -45,15 +45,15 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 	return sprite1;
 }
 
-//bool vHeld = false;
-//
-//void handleEvent(Uint32 sdlEvent)
-//{
-//	if (sdlEvent == SDLK_v)
-//	{
-//		vHeld = true;
-//	}
-//}
+bool vHeld = false;
+
+void handleEvent(Uint32 sdlEvent)
+{
+	if (sdlEvent == SDLK_v)
+	{
+		vHeld = true;
+	}
+}
 
 int main(int argc, char **argv){
 
@@ -63,7 +63,7 @@ int main(int argc, char **argv){
 	const std::string resPath = getResourcePath("SpriteDemo");
 
 	Sprite* spriteBG = game->createSprite(resPath + "Background.png", SCREEN_WIDTH, SCREEN_HEIGHT);
-	//spriteBG->body.layer = 0;
+	spriteBG->body.layer = 0;
 	int bgFrame = spriteBG->makeFrame(0, 0);
 	game->addToEnvironment(spriteBG);
 

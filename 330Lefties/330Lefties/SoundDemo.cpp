@@ -1,8 +1,3 @@
-////
-//// Uncomment this script and comment out main.cpp to see a sound demo 
-////
-//
-//
 //#include <iostream>
 //#include <sstream>
 //#include <Windows.h>
@@ -13,6 +8,7 @@
 //#include "SDL_image.h"
 //#include "Sprite.h"
 //#include "Sound.h"
+//#include "SoundManager.h"
 //
 //const int SCREEN_WIDTH = 640;
 //const int SCREEN_HEIGHT = 480;
@@ -72,7 +68,7 @@
 //
 //	initEverything();
 //
-//	SDL_Window *window = SDL_CreateWindow("Sound Demo", 800, 100, SCREEN_WIDTH,
+//	SDL_Window *window = SDL_CreateWindow("Sprite Demo", 800, 100, SCREEN_WIDTH,
 //		SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 //	if (window == nullptr){
 //		logSDLError(std::cout, "CreateWindow");
@@ -88,9 +84,9 @@
 //		return 1;
 //	}
 //
-//	const std::string resPath = getResourcePath("330LProject");
+//	const std::string resPath = getResourcePath("SpriteDemo");
 //
-//	SDL_Texture *background = loadTexture(resPath + "background.png", renderer);
+//	SDL_Texture *background = loadTexture(resPath + "grass.png", renderer);
 //	// Make sure all is well
 //	if (background == nullptr){
 //		cleanup(background, renderer, window);
@@ -102,60 +98,158 @@
 //	Sprite* spriteBG = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT, renderer);
 //	spriteBG->setPos(0, 0);
 //	int bgFrame = spriteBG->makeFrame(background, 0, 0);
-//	
-//	// The music that will be played
-//	Sound *music = new Sound(resPath + "loop1.wav", false);
 //
-//	// Add a sound for walking to sprite1
-//	Sound *walking = new Sound(resPath + "step1.wav");
+//	SDL_Texture *spritesheet = loadTexture(resPath + "soldier.png", renderer);
+//	// spritesheet is from "player.png" at www.briancollins1.com
+//	if (spritesheet == nullptr){
+//		cleanup(spritesheet, renderer, window);
+//		IMG_Quit();
+//		SDL_Quit();
+//		return 1;
+//	}
+//
+//	SDL_Texture *spritesheet2 = loadTexture(resPath + "Up.png", renderer);
+//	if (spritesheet2 == nullptr){
+//		cleanup(spritesheet2, renderer, window);
+//		IMG_Quit();
+//		SDL_Quit();
+//		return 1;
+//	}
+//
+//	SDL_Texture *spritesheet3 = loadTexture(resPath + "Down.png", renderer);
+//	if (spritesheet3 == nullptr){
+//		cleanup(spritesheet3, renderer, window);
+//		IMG_Quit();
+//		SDL_Quit();
+//		return 1;
+//	}
+//
+//	Sprite* sprite1 = new Sprite(64, 64, renderer);
+//	sprite1->addFrameToSequence("idle", sprite1->makeFrame(spritesheet, 0, 128));
+//
+//	for (int i = 0; i<9; i++)
+//	{
+//		for (int j = 0; j<5; j++)
+//		{
+//			sprite1->addFrameToSequence("walk right", sprite1->makeFrame(spritesheet, i * 64, 192));
+//		}
+//	}
+//
+//	for (int i = 0; i<9; i++)
+//	{
+//		for (int j = 0; j<5; j++)
+//		{
+//			sprite1->addFrameToSequence("walk left", sprite1->makeFrame(spritesheet, i * 64, 64));
+//		}
+//	}
+//
+//	for (int i = 0; i<9; i++)
+//	{
+//		for (int j = 0; j<5; j++)
+//		{
+//			sprite1->addFrameToSequence("walk up", sprite1->makeFrame(spritesheet, i * 64, 0));
+//		}
+//	}
+//
+//	for (int i = 0; i<9; i++)
+//	{
+//		for (int j = 0; j<5; j++)
+//		{
+//			sprite1->addFrameToSequence("walk down", sprite1->makeFrame(spritesheet, i * 64, 128));
+//		}
+//	}
+//
+//	// Sound Stuff
+//	
+//	// Sound manager controls and stores all sounds
+//	SoundManager *sounds = new SoundManager();
+//
+//	// Set the volume for the music
+//	
+//
+//	// Set the backgound music
+//	sounds->setMusic(resPath + "loop1.wav");
+//
+//	// Set the walking sound
+//	sounds->createEffect("walk", resPath + "step1.wav");
+//
+//	// Set the jump sound
+//	sounds->createEffect("jump", resPath + "jump.wav");
+//
+//
+//
+//	int x = SCREEN_WIDTH / 2;
+//	int y = SCREEN_HEIGHT / 2;
+//	sprite1->setPos(x, y);
 //
 //	SDL_Event e;
 //	bool quit = false;
 //	bool key_press = false;
 //	std::string spriteDirection = "idle";
 //	while (!quit){
-//		// Play the music
-//		music->play();
 //
 //		while (SDL_PollEvent(&e)){
 //			if (e.type == SDL_QUIT){
 //				quit = true;
 //			}
+//
+//			// Play background music
+//			sounds->playMusic();
+//
 //			if (e.type == SDL_KEYDOWN){
+//				if (e.key.keysym.sym == SDLK_SPACE)
+//				{
+//					// Play jump effect with space bar
+//					sounds->playEffect("jump");
+//				}
 //				if (e.key.keysym.sym == SDLK_RIGHT)
 //				{
 //					// Play walking effect
-//					walking->play();
+//					sounds->playEffect("walk");
+//
+//					sprite1->movex(1);
+//					spriteDirection = "walk right";
 //				}
 //				else if (e.key.keysym.sym == SDLK_LEFT)
 //				{
-//					// Play walking effect
-//					walking->play();
+//					// Pause the walking effect
+//					sounds->pauseEffect("walk");
+//
+//					sprite1->movex(-1);
+//					spriteDirection = "walk left";
 //				}
 //				else if (e.key.keysym.sym == SDLK_UP)
 //				{
-//					// Play walking effect
-//					walking->play();
+//					// Turns music volume up 1 level per call
+//					sounds->musicVolUp();
+//
+//					sprite1->movey(-1);
+//					spriteDirection = "walk up";
 //				}
 //				else if (e.key.keysym.sym == SDLK_DOWN)
 //				{
-//					 //Play walking effect
-//					walking->play();
+//					// Turns music volume down 1 level per call
+//					sounds->musicVolDown();
+//
+//					sprite1->movey(1);
+//					spriteDirection = "walk down";
 //				}
 //			}
 //		}
-//		// Render the scene
+//		//Render the scene
 //		SDL_RenderClear(renderer);
 //		spriteBG->show(bgFrame);
+//		sprite1->show(spriteDirection.c_str());
 //		SDL_RenderPresent(renderer);
 //	}
 //
-//	getchar();
-//	cleanup(background, renderer, window);
+//	// Added these to free the sounds
+//	//Mix_FreeMusic(music);
+//	//music = NULL;
+//
+//	cleanup(background, spritesheet, spritesheet2, spritesheet3, renderer, window);
 //	Mix_Quit();  //Added Mix_Quit()
 //	IMG_Quit();
-//	SDL_Quit();
-//
 //	SDL_Quit();
 //
 //	return 0;

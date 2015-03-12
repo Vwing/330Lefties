@@ -93,11 +93,10 @@ void Sound::play()
 	}
 	if (effect != NULL)
 	{
-		if (Mix_Playing(1) == 0)
+		if (Mix_Playing(my_channel) == 0)
 		{
 			// Play sound effect
-			get_channel = Mix_PlayChannel(my_channel, effect, 0);
-			if (get_channel == -1)
+			if (Mix_PlayChannel(my_channel, effect, 0) == -1)
 			{
 				yikes(("Failed to play effect! SDL_mixer Error: %s\n", Mix_GetError()));
 			}
@@ -107,19 +106,18 @@ void Sound::play()
 
 void Sound::playInterupt()
 {
-	if (Mix_Playing(1) == 1)
+	if (Mix_Playing(my_channel) == 1)
 	{
-		Mix_HaltChannel(1);
-		get_channel = Mix_PlayChannel(my_channel, effect, 0);
-		if (get_channel == -1)
+		Mix_HaltChannel(my_channel);
+		my_channel = Mix_PlayChannel(my_channel, effect, 0);
+		if (my_channel == -1)
 		{
 			yikes(("Failed to play effect! SDL_mixer Error: %s\n", Mix_GetError()));
 		}
 	}
 	else
 	{
-		get_channel = Mix_PlayChannel(my_channel, effect, 0);
-		if (get_channel == -1)
+		if (Mix_PlayChannel(my_channel, effect, 0) == -1)
 		{
 			yikes(("Failed to play effect! SDL_mixer Error: %s\n", Mix_GetError()));
 		}
@@ -129,24 +127,47 @@ void Sound::playInterupt()
 void Sound::setChannel(int channel)
 {
 	my_channel = channel;
-	get_channel = channel;
+	my_volume = Mix_Volume(my_channel, -1);
 }
 
 int Sound::getChannel()
 {
-	return get_channel;
+	return my_channel;
 }
 
-void Sound::volume(int vol)
+int Sound::getVolume()
 {
-	if (music != NULL)
+	return my_volume;
+}
+
+void Sound::volume(int vol, bool all_sounds)
+{
+	if (vol < 0)
 	{
-		Mix_VolumeMusic(vol);
+		my_volume = 0;
+	}
+	else if (vol > 128)
+	{
+		my_volume = 128;
+	}
+	else
+	{
+		my_volume = vol;
+	}
+	
+	if (all_sounds)
+	{
+		Mix_Volume(-1, my_volume);
+	}
+	else if (music != NULL)
+	{
+		Mix_VolumeMusic(my_volume);
 	}
 	else if (effect != NULL)
 	{
-		Mix_VolumeChunk(effect, vol);
+		Mix_VolumeChunk(effect, my_volume);
 	}
+	
 }
 
 void Sound::pause(bool all_sounds)
@@ -155,9 +176,13 @@ void Sound::pause(bool all_sounds)
 	{
 		Mix_Pause(-1);
 	}
-	else if (get_channel != -1)
+	else if (music != NULL)
 	{
-		Mix_Pause(get_channel);
+		Mix_PauseMusic();
+	}
+	else if (effect != NULL)
+	{
+		Mix_Pause(my_channel);
 	}
 }
 
@@ -167,10 +192,33 @@ void Sound::resume(bool all_sounds)
 	{
 		Mix_Resume(-1);
 	}
-	else if (get_channel != -1)
+	else if (music != NULL)
 	{
-		Mix_Resume(get_channel);
+		Mix_ResumeMusic();
+	}
+	else if (effect != NULL)
+	{
+		Mix_Resume(my_channel);
 	}
 }
+
+// Halt the playing of this sound or all sounds by passing true
+void Sound::halt(bool all_sounds)
+{
+	if (all_sounds)
+	{
+		Mix_HaltChannel(-1);
+	}
+	else if (music != NULL)
+	{
+		//Mix_HaltMusic();
+		Mix_HaltChannel(0);  // Halt music is not working for some reason
+	}
+	else if (effect != NULL)
+	{
+		Mix_HaltChannel(my_channel);
+	}
+}
+
 
 

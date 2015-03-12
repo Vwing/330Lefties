@@ -37,14 +37,20 @@ public:
 	// Returns the current channel this sound is played on
 	int getChannel();
 
-	// Set the volume of the sound from 0 - 128
-	void volume(int vol);
+	// Returns the current volume for this channel
+	int getVolume();
+
+	// Set the volume of the sound from 0 - 128. Pass true for all volume
+	void volume(int vol, bool all_sounds = false);
 
 	// Pause the sound on this channel or pass true to pause all
 	void pause(bool all_sounds = false);
 
 	// Resume the sound on this channel or pass true to resume all
 	void resume(bool all_sounds = false);
+
+	// Halt the playing of this sound or all sounds by passing true
+	void halt(bool all_sounds = false);
 
 private:
 	// Error message function
@@ -54,7 +60,7 @@ private:
 	Mix_Chunk *effect = NULL;
 	std::string my_path = "";
 	int my_channel = -1;
-	int get_channel = -1;
+	int my_volume = 64;
 };
 
 #endif

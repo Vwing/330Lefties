@@ -11,7 +11,7 @@
 #include "UI_Element.h"
 #include "UI.h"
 #include "SDL_mixer.h"
-#include "Sound.h"
+#include "SoundManager.h"
 
 class Game : GameObject
 {

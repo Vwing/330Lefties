@@ -28,6 +28,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="PortraitTextBox.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Subscriber.h" />
     <ClInclude Include="TextBox.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="PortraitTextBox.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundDemo.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Subscriber.cpp" />
