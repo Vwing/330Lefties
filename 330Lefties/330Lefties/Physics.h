@@ -43,7 +43,7 @@ public:
 		top2 = obj2->body.yPos;
 		bottom2 = obj2->body.yPos + obj2->body.height;
 
-		bool physicsEnabled = obj1.enablePhysics && obj2.enablePhysics;
+		bool physicsEnabled = obj1->enablePhysics && obj2->enablePhysics;
 		//If any of the sides from 1 are outside of 2
 		if (bottom1 < top2)
 		{

@@ -23,6 +23,7 @@ Character::Character(Sprite* sprite, int startHP)
 	Global_RegisterForEvent(this, SDLK_RIGHT);
 	Global_RegisterForEvent(this, SDLK_LEFT);
 	Global_RegisterForEvent(this, SDLK_SPACE);
+	Global_RegisterForEvent(this, Collide);
 }
 
 Character::~Character(void){
