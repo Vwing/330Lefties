@@ -166,3 +166,6 @@ FakesAssemblies/
 330Lefties/Debug/330Lefties.exe
 *.ilk
 *.pdb
+*.log
+*.tlog
+*.idb
