@@ -170,7 +170,7 @@ void Camera::render() {
 
 		Get all the elements that can be seen by the Camera, then render them by layer.
 
-		A higher layer means that object will be drawn later.
+		A lower layer means that object will be drawn later.
 	*/
 	class CompareGameObjects{
 	public:
