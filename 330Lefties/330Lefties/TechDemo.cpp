@@ -68,7 +68,6 @@ int main(int argc, char **argv){
 
 	Timer fps;
 
-	SoundManager* soundman = new SoundManager();
 	TextBoxResource *TextBoxResource = TextBoxResource::getInstance();
 
 	const std::string resPath = getResourcePath("SpriteDemo");
@@ -77,8 +76,11 @@ int main(int argc, char **argv){
 	spriteBG->body.layer = 2;
 	spriteBG->makeFrame(0, 0);
 
-	soundman->setMusic(resPath + "loop1.wav");
-	soundman->playMusic();
+	game->getSoundManager().setMusic(resPath + "loop1.wav");
+	game->getSoundManager().playMusic();
+
+	game->getSoundManager().createEffect("walk", resPath + "step1.wav");
+	game->getSoundManager().createEffect("collide", resPath + "collide.wav");
 
 	TextBoxResource->loadFont(resPath + "SpecialElite.ttf", 30);
 
@@ -113,12 +115,19 @@ int main(int argc, char **argv){
 	game->camera->setCenterObject(guy);
 	game->camera->setMovementOption("CENTER_OBJ");
 
+	Uint32 collideEvent = 999999;
+
 	while (!game->isOver())
 	{
 		fps.start();
 		game->update();
 		//Render the scene
 		game->render();
+
+		if (game->physics->collide(guy, guy2, collideEvent))
+		{
+			game->getSoundManager().playEffect("collide");
+		}
 		while (fps.getTicks() < 1000 / FRAMES_PER_SECOND){}
 	}
 
