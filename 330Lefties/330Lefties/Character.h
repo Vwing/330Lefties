@@ -19,6 +19,7 @@ public:
 	void moveRight(unsigned int distance);
 	void jump(unsigned int distance);
 	void fall(unsigned int distance);
+	void setPos(int x, int y);
 
 	//void handleEvent(SDL_Event sdlEvent);
 	void handleEvent(Uint32 sdlEvent);
