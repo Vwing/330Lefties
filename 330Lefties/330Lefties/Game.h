@@ -28,17 +28,18 @@ public:
 	bool isOver();
 	void quitGame();
 
-//	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
 	Sprite* createSprite(std::string resPath, int width, int height, int xPos = 0, int yPos = 0);
 	Button* addButton(std::string resPath, Uint32 onDownEvent, int width, int height, int xPos = 0, int yPos = 0);
 	Unit* addToEnvironment(Unit* gameObject);
-	// Character* addCharacter(Sprite* sprite, int HP);  < This should be game programmer stuff
+
+	SoundManager& getSoundManager();
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-
+	
 	Camera* camera; // Controls what gets seen in the environment
 	Physics* physics;
+	
 
 private:
 
