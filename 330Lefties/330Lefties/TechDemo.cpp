@@ -4,7 +4,13 @@
 #include "res_path.h"
 #include "Globals.h"
 #include "Game.h"
+#include "SoundManager.h"
+#include "Timer.h"
+#include <ostream>
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+const int FRAMES_PER_SECOND = 60;
 
 void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1, int frame2, int frame3){
 	std::vector<int> moveFrames;
@@ -17,8 +23,6 @@ void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1,
 			sprite1->addFrameToSequence(sequence, frameNum, 2);
 }
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
 Sprite* MakeSprite(std::string resPath, Game* game)
 {
 	Sprite* sprite1 = game->createSprite(resPath + "Fey.png", 32, 32);
@@ -59,21 +63,28 @@ int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
 
+	Timer fps;
+
+	SoundManager* soundman = new SoundManager();
+
 	const std::string resPath = getResourcePath("SpriteDemo");
 
 	Sprite* spriteBG = game->createSprite(resPath + "Background.png", SCREEN_WIDTH, SCREEN_HEIGHT);
 	spriteBG->body.layer = 2;
 	int bgFrame = spriteBG->makeFrame(0, 0);
 
+	soundman->setMusic(resPath + "loop1.wav");
+	soundman->playMusic();
+
 	// game->setEnvironment(1000, SCREEN_HEIGHT);   (STILL DEBUGGING)
 	game->addToEnvironment(spriteBG);
 
-	//// Button won't listen for events properly.
-	//Uint32 buttonDownEvent = 500;
-	//Button* button = game->addButton(resPath + "button_states.png", buttonDownEvent, 200, 40);
-	//button->onButtonUp(0, 0);
-	//button->onButtonDown(0, 40);
-	//button->onButtonOver(0, 80);
+	// Button won't listen for events properly.
+	Uint32 buttonDownEvent = 500;
+	Button* button = game->addButton(resPath + "button_states.png", buttonDownEvent, 200, 40);
+	button->onButtonUp(0, 0);
+	button->onButtonDown(0, 40);
+	button->onButtonOver(0, 80);
 
 	Sprite* sprite1 = MakeSprite(resPath, game);
 	Sprite* sprite2 = MakeSprite(resPath, game);
@@ -94,9 +105,11 @@ int main(int argc, char **argv){
 
 	while (!game->isOver())
 	{
+		fps.start();
 		game->update();
 		//Render the scene
 		game->render();
+		while (fps.getTicks() < 1000 / FRAMES_PER_SECOND){}
 	}
 
 

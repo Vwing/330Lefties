@@ -33,6 +33,7 @@
     <ClInclude Include="Subscriber.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextBoxResource.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UI_Element.h" />
     <ClInclude Include="Unit.h" />
