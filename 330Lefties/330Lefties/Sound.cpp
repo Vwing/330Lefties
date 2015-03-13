@@ -185,6 +185,7 @@ void Sound::pause(bool all_sounds)
 	if (all_sounds)
 	{
 		Mix_Pause(-1);
+		Mix_PauseMusic();
 	}
 	else if (music != NULL)
 	{
@@ -202,6 +203,7 @@ void Sound::resume(bool all_sounds)
 	if (all_sounds)
 	{
 		Mix_Resume(-1);
+		Mix_ResumeMusic();
 	}
 	else if (music != NULL)
 	{
