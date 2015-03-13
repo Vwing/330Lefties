@@ -1,21 +1,24 @@
-#pragma once
+
 #include "Mobile_Platform.h"
 
-Mobile_Platform::Mobile_Platform(Sprite* s, std::string h)
+Mobile_Platform::Mobile_Platform(Sprite* s)
 {
 	sprite = s;
-	currentseq = h;
-	Unit::enableAI = true;
-	Unit::enablePhysics = true;
-	body.xPos = x;
-	body.yPos = y;
-	ai = Unit::createAI(x, y);
+	body.xPos = sprite->body.xPos;
+	body.yPos = sprite->body.yPos;
+	body.height = sprite->body.height;
+	body.width = sprite->body.width;
+
+	enableAI = true;
+	enablePhysics = true;
+
+	createAI();
 	ai->patrol(10, 0, 60);
 }
 
 Mobile_Platform::~Mobile_Platform()
 {
-	delete sprite;
+	delete sprite, ai;
 }
 
 void Mobile_Platform::update()

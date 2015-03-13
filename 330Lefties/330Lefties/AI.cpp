@@ -14,24 +14,26 @@ AI::AI(int x, int y)
 	xrange = 0;
 	yrange = 0;
 }
+/*
+AI::AI(Unit* u)
+{
+	this->x = u->body.xPos;
+	this->y = u->body.yPos;
+	pacing = 0;
+	pace_reverse = false;
+	path_index = 0;
+	path_step = 0;
+	reverse_x = false;
+	reverse_y = false;
+	xrange = 0;
+	yrange = 0;
 
+}
+*/
 AI::~AI(void)
 {
 }
 
-/*AI::AI(unit* u)
-{
-this->x = &u->x;
-this->y = &u->y;
-pacing = 0;
-pace_reverse = false;
-path_index = 0;
-path_step = 0;
-reverse_x = false;
-reverse_y = false;
-xrange = 0;
-yrange = 0;
-}*/
 
 void AI::move(int x, int y)
 {

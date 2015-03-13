@@ -15,8 +15,6 @@ public:
 
 
 private:
-	int x;
-	int y;
+
 	Sprite* s;
-	AI* ai;
 };

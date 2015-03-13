@@ -1,4 +1,4 @@
-#pragma once
+
 #include "BasicNPC.h"
 #include "random"
 #include "time.h"
@@ -6,17 +6,15 @@
 BasicNPC::BasicNPC(Sprite* sprt,std::string seq)
 {
 	s = sprt;
-	x = s->getX();
-	y = s->getY();
+	body.xPos = s->body.xPos;
+	body.yPos = s->body.yPos;
 	srand(time(NULL));
 	currentseq = seq;
 
 	Unit::enableAI = true;
 	Unit::enablePhysics = true;
 
-	body.xPos = x;
-	body.yPos = y;
-	ai = Unit::createAI(x, y);
+	createAI();
 	if (ai == nullptr)
 	{
 		std::cout << "AI failed" << std::endl;
@@ -56,8 +54,8 @@ void BasicNPC::handleEvent(Uint32 e)
 
 void BasicNPC::move(int x, int y)
 {
-	BasicNPC::x += x;
-	BasicNPC::y += y;
-	s->setPos(BasicNPC::x, BasicNPC::y);
+	x += x;
+	y += y;
+	s->setPos(x, y);
 
 }

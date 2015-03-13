@@ -6,7 +6,7 @@
 class NPC : public Unit
 {
 public:
-	bool enableAI = true;//not sure how this works
+	bool enableAI = true;
 	bool enablePhysics = true;
 
 	//NPC();

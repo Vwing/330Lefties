@@ -8,6 +8,7 @@
 #include "Timer.h"
 #include <ostream>
 #include "TextBoxResource.h"
+#include "Mobile_Platform.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -119,6 +120,10 @@ int main(int argc, char **argv){
 	Sprite* platform1 = game->createSprite(resPath + "platform_grass.png", 442, 233, 0, (guy->body.yPos + guy->body.height));
 	platform1->makeFrame(0, 0);
 	game->addToEnvironment(platform1);
+
+	Sprite* platform2 = game->createSprite(resPath + "platform_grass.png", 442, 233, 450, (guy->body.yPos + guy->body.height));
+	Mobile_Platform* mob_plat1 = new Mobile_Platform(platform2);
+	game->addToEnvironment(mob_plat1);
 
 	Uint32 collideEvent = 999999;
 
