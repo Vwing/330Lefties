@@ -9,6 +9,12 @@ class Unit : public GameObject
 {
 public:
 
+	struct Velocity 
+	{
+		int x = 0;
+		int y = 0;
+	};
+
 	bool enableAI = false;
 	bool enablePhysics = false;
 	AI* ai;
