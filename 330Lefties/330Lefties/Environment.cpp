@@ -1,10 +1,10 @@
 #include "Environment.h"
 #include <algorithm>
 
-Environment::Environment(int worldWidth, int worldHeight, bool updateAll)
+Environment::Environment(int worldWidth, int worldHeight, Physics* p, bool updateAll)
 	: WORLD_WIDTH(worldWidth), WORLD_HEIGHT(worldHeight){
 
-	//physics = new Physics(WORLD_HEIGHT, WORLD_WIDTH);
+	physics = p;
 	update_all = updateAll;
 }
 
@@ -22,6 +22,8 @@ void Environment::update(){
 	if (update_all){
 		for (int i=0; i<objects.size(); i++){
 			objects.at(i)->update();
+			if(objects[i].enablePhysics)
+				p->update(objects[i]);
 		}
 	}
 	else{
