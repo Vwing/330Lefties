@@ -49,9 +49,9 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 		NOTE: For a platformer game, the environment should be wider (and possibly
 		higher than the window.
 	*/
-	environment = new Environment(windowWidth, windowHeight);
-	camera = new Camera(windowWidth, windowHeight, environment);
 	physics = new Physics(windowWidth, windowHeight);
+	environment = new Environment(windowWidth, physics, windowHeight);
+	camera = new Camera(windowWidth, windowHeight, environment);
 	ui = new UI();
 
 	Global_RegisterForEvent(this, SDLK_ESCAPE);
