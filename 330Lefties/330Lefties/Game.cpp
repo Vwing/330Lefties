@@ -97,7 +97,7 @@ void Game::render()
 
 void Game::handleEvent(Uint32 sdlEvent)
 {
-	if (sdlEvent == SDLK_ESCAPE)
+	if (sdlEvent == SDLK_ESCAPE || sdlEvent == SDL_WINDOWEVENT_CLOSE || sdlEvent == SDL_QUIT)
 	{
 		quit = true;
 	}
@@ -110,17 +110,6 @@ void Game::setEnvironment(int newWorldWidth, int newWorldHeight)
 	physics->set_world(newEnv->getWidth(), newEnv->getHeight());
 }
 
-/*
-Sprite* Game::addSprite(int width, int height, int xPos, int yPos)
-{
-	Sprite* newSprite = new Sprite(width, height, renderer, xPos, yPos);
-
-	allGameObjects.push_back(newSprite);
-	environment->addObject(newSprite);
-
-	return newSprite;
-}
-*/
 Sprite* Game::createSprite(std::string resPath, int width, int height, int xPos, int yPos)
 {
 	Sprite* newSprite = new Sprite(resPath, renderer, width, height, xPos, yPos);
@@ -138,17 +127,10 @@ Unit* Game::addToEnvironment(Unit* gameObject){
 	return gameObject;
 }
 
-
-/*
-Character* Game::addCharacter(Sprite* sprite, int HP){
-	Character* newChar = new Character(sprite, renderer, HP);
-
-	allGameObjects.push_back(newChar);
-	environment->addObject(newChar);
-	
-	return newChar;
+SoundManager& Game::getSoundManager()
+{
+	return SoundManager::getInstance();
 }
-*/
 
 bool Game::isOver()
 {

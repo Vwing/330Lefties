@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <math.h>
-//#include "Unit.h"
+// #include "Unit.h"
 
 class AI
 {
@@ -10,7 +10,7 @@ public:
 	//constructor currently takes a pointer to x and y. can use other constructor with unit class.
 	AI(int x, int y);
 	//this constructor takes a pointer to a unit
-	//AI(unit* e);
+	// AI(Unit* u);
 	~AI(void);
 
 	//patterns

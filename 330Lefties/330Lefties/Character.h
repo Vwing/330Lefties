@@ -5,6 +5,8 @@
 
 class Character : public Unit {
 public:
+	const static int JUMP_DISTANCE = 50;
+
 	Character(Sprite* sprite, int startHP = 100);
 	~Character(void);
 
@@ -29,6 +31,9 @@ public:
 private:
 	int hp;
 	int mass;
+	bool jumping;
+	bool falling;
+	int currJumpDistance;
 	Sprite* sprite;
 
 	struct MoveSequences{

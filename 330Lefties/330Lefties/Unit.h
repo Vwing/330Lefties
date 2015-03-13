@@ -8,17 +8,26 @@
 class Unit : public GameObject
 {
 public:
-	AI* ai;
+
 	bool enableAI = false;
 	bool enablePhysics = false;
-
-	AI* createAI(int x, int y)
+	AI* ai;
+	
+	void createAI()
 	{
 		if (enableAI)
 		{
-			ai = new AI(x, y);
-			return ai;
+			ai = new AI(this->body.xPos, this->body.xPos);
 		}
-		return nullptr;
 	}
+	
+	/*
+	void createAI(Unit* u)
+	{
+		if (enableAI)
+		{
+			ai = new AI(u);
+		}
+	}
+	*/
 };

@@ -25,10 +25,31 @@ public:
 	}
 
 	bool check_collision(Unit* obj1, Unit* obj2){
-		return !(obj2->body.xPos > obj1->body.xPos + obj1->body.width
-			|| obj2->body.xPos + obj2->body.width < obj1->body.xPos
-			|| obj2->body.yPos > obj1->body.yPos + obj1->body.height
-			|| obj2->body.yPos + obj2->body.height < obj1->body.yPos);
+		//The sides of the rectangles
+		int left1, left2;
+		int right1, right2;
+		int top1, top2;
+		int bottom1, bottom2;
+
+		//Calculate the sides of obj1
+		left1 = obj1->body.xPos;
+		right1 = obj1->body.xPos + obj1->body.width;
+		top1 = obj1->body.yPos;
+		bottom1 = obj1->body.yPos + obj1->body.height;
+
+		//Calculate the sides of obj2
+		left2 = obj2->body.xPos;
+		right2 = obj2->body.xPos + obj2->body.width;
+		top2 = obj2->body.yPos;
+		bottom2 = obj2->body.yPos + obj2->body.height;
+
+		//If any of the sides from 1 are outside of 2
+		if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
+		{
+			return false;
+		}
+		//If none of the sides from 1 are outside 2
+		return true;
 	}
 
 
