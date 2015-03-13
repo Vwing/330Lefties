@@ -44,7 +44,7 @@ public:
 		bottom2 = obj2->body.yPos + obj2->body.height;
 
 		//If any of the sides from 1 are outside of 2
-		if (bottom1 <= top2 || top1 >= bottom2 || right1 <= left2 || left1 >= right2)
+		if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
 		{
 			return false;
 		}

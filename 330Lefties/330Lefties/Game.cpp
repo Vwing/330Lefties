@@ -97,7 +97,7 @@ void Game::render()
 
 void Game::handleEvent(Uint32 sdlEvent)
 {
-	if (sdlEvent == SDLK_ESCAPE)
+	if (sdlEvent == SDLK_ESCAPE || sdlEvent == SDL_WINDOWEVENT_CLOSE || sdlEvent == SDL_QUIT)
 	{
 		quit = true;
 	}

@@ -73,7 +73,7 @@ int main(int argc, char **argv){
 	const std::string resPath = getResourcePath("SpriteDemo");
 
 	Sprite* spriteBG = game->createSprite(resPath + "Background2.png", LEVEL_WIDTH, LEVEL_HEIGHT);
-	spriteBG->body.layer = 2;
+	spriteBG->body.layer = 10;
 	spriteBG->makeFrame(0, 0);
 
 	game->getSoundManager().setMusic(resPath + "loop1.wav");
@@ -95,7 +95,7 @@ int main(int argc, char **argv){
 	button->onButtonOver(0, 80);
 
 	Sprite* sprite1 = MakeSprite(resPath, game);
-	Sprite* sprite2 = MakeSprite(resPath, game);
+	//Sprite* sprite2 = MakeSprite(resPath, game);
 
 	//int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
 	//int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
@@ -103,17 +103,22 @@ int main(int argc, char **argv){
 	int y = LEVEL_HEIGHT * 7 / 13;
 
 	sprite1->setPos(x, y);
-	sprite2->setPos(x + sprite2->body.width, y);
+	//sprite2->setPos(x + sprite2->body.width, y);
 	sprite1->changeSequence("walk up");
-	sprite2->changeSequence("walk up");
+	//sprite2->changeSequence("walk up");
 
 	Character* guy = new Character(sprite1, 100);
-	Character* guy2 = new Character(sprite2, 100);
-	Global_RegisterForEvent(guy2, SDLK_v);
+	//Character* guy2 = new Character(sprite2, 100);
+	//Global_RegisterForEvent(guy2, SDLK_v);
 	game->addToEnvironment(guy);
-	game->addToEnvironment(guy2);
+	//game->addToEnvironment(guy2);
 	game->camera->setCenterObject(guy);
 	game->camera->setMovementOption("CENTER_OBJ");
+
+
+	Sprite* platform1 = game->createSprite(resPath + "platform_grass.png", 442, 233, 0, (guy->body.yPos + guy->body.height));
+	platform1->makeFrame(0, 0);
+	game->addToEnvironment(platform1);
 
 	Uint32 collideEvent = 999999;
 
@@ -124,7 +129,7 @@ int main(int argc, char **argv){
 		//Render the scene
 		game->render();
 
-		if (game->physics->collide(guy, guy2, collideEvent))
+		if (game->physics->collide(guy, platform1, collideEvent))
 		{
 			game->getSoundManager().playEffect("collide");
 		}
