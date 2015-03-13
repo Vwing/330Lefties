@@ -16,7 +16,6 @@ Camera::Camera(int width, int height, Environment* env, int xPos, int yPos)
 	body.height = height;
 	body.xPos = xPos;
 	body.yPos = yPos;
-	body.physical = false;
 
 	option = FIXED;
 	pan_amount = 0;
@@ -216,7 +215,7 @@ void Camera::render() {
 	}
 }
 
-void Camera::handleEvent(SDL_Event sdlEvent) 
+void Camera::handleEvent(Uint32 sdlEvent) 
 {
 	/*
 		Implementation for events:
