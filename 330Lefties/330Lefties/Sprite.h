@@ -57,12 +57,12 @@ protected:
 	std::vector<frame> frames;
 
 	//frameSequence has a vector of pairs of (1. frameIndex 2. frame duration in milliseconds) and the current index the vector is on
-	struct frameSequence{
+	struct FrameSequence{
 		std::vector<std::pair<int, unsigned int>> frameVector;
 		unsigned int currentIndex;
 	};
 
-	std::map<std::string, frameSequence> sequenceList;
+	std::map<std::string, FrameSequence> sequenceList;
 
 	// Mapping of sequence names to pairs of (1. List of frames 2. Current sequence index)
 	//std::map<std::string, std::pair <std::vector<int>, unsigned int>> sequenceList;

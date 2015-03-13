@@ -145,10 +145,22 @@ int Sprite::makeFrame(std::string filePath, int x, int y){
 }
 
 int Sprite::addFrameToSequence(std::string seqName, int frameIndex, unsigned int duration){
-	//sequenceList[seqName].first.push_back(frameIndex);
-	//return sequenceList[seqName].first.size();
-	sequenceList[seqName].frameVector.push_back(std::make_pair(frameIndex, duration));
-	return sequenceList[seqName].frameVector.size();
+
+	if (sequenceList.find(seqName) == end(sequenceList))
+	{
+		FrameSequence frameSeq;
+		frameSeq.frameVector.push_back(std::make_pair(frameIndex, duration));
+		frameSeq.currentIndex = 0;
+
+		sequenceList.insert(std::make_pair(seqName, frameSeq));
+		return 1;
+	}
+	else
+	{
+		sequenceList[seqName].frameVector.push_back(std::make_pair(frameIndex, duration));
+		return sequenceList[seqName].frameVector.size();
+	}
+	
 }
 
 void Sprite::show(int frameIndex){
@@ -190,6 +202,10 @@ void Sprite::update(){
 }
 
 void Sprite::render(){
+	if (frames.empty())
+	{
+		return;
+	}
 	if (current_seq == "" && !frames.empty()){
 		show(0);
 	}
