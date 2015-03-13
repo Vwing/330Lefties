@@ -9,9 +9,12 @@
 class SoundManager
 {
 public:
-	SoundManager(){};
-	~SoundManager();
-
+	static SoundManager& getInstance()
+	{
+		static SoundManager instance; // Guaranteed to be destroyed.
+		// Instantiated on first use.
+		return instance;
+	}
 	// Set background music
 	void setMusic(std::string path);
 
@@ -67,6 +70,11 @@ public:
 	void halt(std::string sound_name);
 
 private:
+	SoundManager(){};
+	~SoundManager();
+	SoundManager(SoundManager const&) = delete;
+	void operator=(SoundManager const&) = delete;
+
 	std::map<std::string, Sound*> sounds;  // All effects are stored here
 	Sound *music;						  // The background music
 	int channels = 0;
