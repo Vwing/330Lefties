@@ -1,13 +1,13 @@
 #pragma once
 
-//#include "Physics.h"
+#include "Physics.h"
 #include "GameObject.h"
 #include <vector>
 
 class Environment
 {
 public:
-	Environment(int worldWidth, int worldHeight, bool update_all = true);
+	Environment(int worldWidth, int worldHeight, Physics* p, bool update_all = true);
 	~Environment(void);
 
 	//Call update() on objects in the environment.
@@ -34,7 +34,7 @@ private:
 	int WORLD_WIDTH;
 	int WORLD_HEIGHT;
 
-	//Physics* physics;
+	Physics* physics;
 
 	//Choose whether to update objects outside of the camera area
 	//Possibly make more options in the future.
