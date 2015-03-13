@@ -138,7 +138,7 @@ int magnitude(Unit* obj){
 	}
 
 void gravity(Unit* obj){
-	obj->body.xPos += (log10(magnitude(obj)))/1.5;
+	obj->Velocity.y += (log10(magnitude(obj)))/1.5;
 	}
 
 void update(Unit* obj){
