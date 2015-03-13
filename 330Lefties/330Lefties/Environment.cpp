@@ -2,12 +2,14 @@
 #include <algorithm>
 
 Environment::Environment(int worldWidth, int worldHeight, bool updateAll)
-	: WORLD_WIDTH(worldWidth), WORLD_HEIGHT(worldHeight), update_all(updateAll)
-{
+	: WORLD_WIDTH(worldWidth), WORLD_HEIGHT(worldHeight){
+
+	//physics = new Physics(WORLD_HEIGHT, WORLD_WIDTH);
+	update_all = updateAll;
 }
 
-Environment::~Environment(void)
-{
+Environment::~Environment(void){
+
 }
 
 void Environment::update(){

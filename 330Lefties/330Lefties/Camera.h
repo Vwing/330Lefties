@@ -28,15 +28,13 @@ public:
 
 	//Set the pixel amount the camera should move for a constant pan
 	void setPanAmount(int amt);
+	void setPanRate(int rate);
 
 	//Set the object the camera should center on
 	void setCenterObject(GameObject* obj);
 
 	//Set movement option.
 	void setMovementOption(MovementOption option);
-
-	//more accessible public function for setting movement option
-	void setMovementOption(std::string opt);
 
 	//Set camera offset.
 	void setOffset(int x, int y);
@@ -52,7 +50,7 @@ public:
 	int getY();
 
 
-	void handleEvent(Uint32 sdlEvent);
+	void handleEvent(SDL_Event sdlEvent);
 	void update();
 	void render();
 
@@ -62,7 +60,10 @@ private:
 	MovementOption option;
 
 	int pan_amount;
+	int pan_rate;
 	GameObject* center_obj;
 	int offset_x;
 	int offset_y;
+
+	int counter;
 };
