@@ -1,11 +1,15 @@
 #include "Globals.h"
 #include "Character.h"
 #include "EventManager.h"
+#include "SoundManager.h"
 
-Character::Character(Sprite* sprite, int startHP){
-	this->sprite = sprite;
+Character::Character(Sprite* sprite, int startHP)
+: sprite(sprite)
+{
 	body.xPos = sprite->body.xPos;
 	body.yPos = sprite->body.yPos;
+	body.height = sprite->body.height;
+	body.width = sprite->body.width;
 	hp = startHP;
 	moveSeq.left = "walk left";
 	moveSeq.right = "walk right";
@@ -73,10 +77,12 @@ void Character::handleEvent(Uint32 sdlEvent){
 	if (sdlEvent == SDLK_RIGHT)
 	{
 		moveRight(5);
+		SoundManager::getInstance().playEffect("walk");
 	}
 	else if (sdlEvent == SDLK_LEFT)
 	{
 		moveLeft(5);
+		SoundManager::getInstance().playEffect("walk");
 	}
 	else if (sdlEvent == SDLK_UP)
 	{
@@ -86,6 +92,7 @@ void Character::handleEvent(Uint32 sdlEvent){
 	{
 		fall(5);
 	}
+
 }
 
 void Character::update(){
