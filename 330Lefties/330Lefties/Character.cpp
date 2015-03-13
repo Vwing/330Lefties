@@ -72,18 +72,24 @@ void Character::moveRight(unsigned int distance){
 
 void Character::jump(unsigned int distance){
 	jumping = true;
-	body.yPos -= distance;
+	//body.yPos -= distance;
 	//sprite->movey(-1 * distance);
 	sprite->changeSequence(moveSeq.jump);
 	currJumpDistance -= distance;
+	//Velocity.y = -1 * distance;
 }
 
 void Character::jump(unsigned int distance, bool left){
 	jumping = true;
-	body.yPos -= distance;
+	//body.yPos -= distance;
 	//sprite->movey(-1 * distance);
 	sprite->changeSequence(moveSeq.jump);
 	currJumpDistance -= distance;
+	//Velocity.y = -1 * distance;
+	if (left)
+		moveLeft(distance);
+	else
+		moveRight(distance);
 }
 
 void Character::fall(unsigned int distance){
@@ -111,7 +117,7 @@ void Character::handleEvent(Uint32 sdlEvent){
 	else if (sdlEvent == SDLK_SPACE)
 	{
 		if (!jumping && !falling)
-			jump(3);
+			jump(10);
 	}
 }
 
@@ -120,7 +126,7 @@ void Character::update(){
 	{
 		if (currJumpDistance > 0)
 		{
-			jump(3);
+			//jump(3);
 		}
 		else
 		{
