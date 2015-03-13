@@ -16,7 +16,7 @@ public:
 	// Add button by creating a new sprite with params
 	//Button* addButton(std::function<void(void)> funcToCall, std::string filePath, int width, int height, int xPos = 0, int yPos = 0);
 	// Add button using existing sprite
-	Button* UI::addButton(std::function<void(void)> funcToCall, Sprite* sprite);
+	Button* UI::addButton(Sprite* sprite, Uint32 onDownEvent);
 
 	void handleEvent(Uint32 sdlEvent);
 	void update();
