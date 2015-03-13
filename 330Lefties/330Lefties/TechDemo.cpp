@@ -58,14 +58,22 @@ void handleEvent(Uint32 sdlEvent)
 int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
-	Camera* camera = game->camera;
 
 	const std::string resPath = getResourcePath("SpriteDemo");
 
 	Sprite* spriteBG = game->createSprite(resPath + "Background.png", SCREEN_WIDTH, SCREEN_HEIGHT);
-	spriteBG->body.layer = 0;
+	spriteBG->body.layer = 2;
 	int bgFrame = spriteBG->makeFrame(0, 0);
+
+	// game->setEnvironment(1000, SCREEN_HEIGHT);   (STILL DEBUGGING)
 	game->addToEnvironment(spriteBG);
+
+	// Button won't listen for events properly.
+	Uint32 buttonDownEvent = 500;
+	Button* button = game->addButton(resPath + "button_states.png", buttonDownEvent, 200, 40);
+	button->onButtonUp(0, 0);
+	button->onButtonDown(0, 40);
+	button->onButtonOver(0, 80);
 
 	Sprite* sprite1 = MakeSprite(resPath, game);
 	Sprite* sprite2 = MakeSprite(resPath, game);
@@ -74,13 +82,15 @@ int main(int argc, char **argv){
 	int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
 	sprite1->setPos(x, y);
 	sprite2->setPos(x + sprite2->body.width, y);
+	sprite1->changeSequence("walk up");
+	sprite2->changeSequence("walk up");
 
 	Character* guy = new Character(sprite1, 100);
 	Character* guy2 = new Character(sprite2, 100);
 	Global_RegisterForEvent(guy2, SDLK_v);
 	game->addToEnvironment(guy);
 	game->addToEnvironment(guy2);
-	camera->setCenterObject(guy);
+	game->camera->setCenterObject(guy);
 
 	while (!game->isOver())
 	{
