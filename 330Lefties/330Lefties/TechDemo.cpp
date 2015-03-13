@@ -8,12 +8,12 @@
 #include "Timer.h"
 #include <ostream>
 #include "TextBoxResource.h"
-#include "Physics.h"
+#include "Mobile_Platform.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-const int WORLD_WIDTH = 2560;
-const int WORLD_HEIGHT = 1600;
+const int LEVEL_WIDTH = 2560;
+const int LEVEL_HEIGHT = 1600;
 const int FRAMES_PER_SECOND = 60;
 
 void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1, int frame2, int frame3){
@@ -66,19 +66,22 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
+
 	Timer fps;
-	SoundManager* soundman = new SoundManager();
+
 	TextBoxResource *TextBoxResource = TextBoxResource::getInstance();
-	Physics physics(WORLD_WIDTH, WORLD_HEIGHT);
 
 	const std::string resPath = getResourcePath("SpriteDemo");
 
-	Sprite* spriteBG = game->createSprite(resPath + "Background2.png", WORLD_WIDTH, WORLD_HEIGHT);
-	spriteBG->body.layer = 2;
+	Sprite* spriteBG = game->createSprite(resPath + "Background2.png", LEVEL_WIDTH, LEVEL_HEIGHT);
+	spriteBG->body.layer = 10;
 	spriteBG->makeFrame(0, 0);
 
-	soundman->setMusic(resPath + "loop1.wav");
-	soundman->playMusic();
+	game->getSoundManager().setMusic(resPath + "loop1.wav");
+	game->getSoundManager().playMusic();
+
+	game->getSoundManager().createEffect("walk", resPath + "step1.wav");
+	game->getSoundManager().createEffect("collide", resPath + "collide.wav");
 
 	TextBoxResource->loadFont(resPath + "SpecialElite.ttf", 30);
 
@@ -93,35 +96,48 @@ int main(int argc, char **argv){
 	button->onButtonOver(0, 80);
 
 	Sprite* sprite1 = MakeSprite(resPath, game);
-	Sprite* sprite2 = MakeSprite(resPath, game);
+	//Sprite* sprite2 = MakeSprite(resPath, game);
 
 	//int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
 	//int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
 	int x = 10;
-	int y = WORLD_HEIGHT * 7 / 13;
+	int y = LEVEL_HEIGHT * 7 / 13;
 
 	sprite1->setPos(x, y);
-	sprite2->setPos(x + sprite2->body.width, y);
+	//sprite2->setPos(x + sprite2->body.width, y);
 	sprite1->changeSequence("walk up");
-	sprite2->changeSequence("walk up");
+	//sprite2->changeSequence("walk up");
 
 	Character* guy = new Character(sprite1, 100);
-	Character* guy2 = new Character(sprite2, 100);
-	Global_RegisterForEvent(guy2, SDLK_v);
+	//Character* guy2 = new Character(sprite2, 100);
+	//Global_RegisterForEvent(guy2, SDLK_v);
 	game->addToEnvironment(guy);
-	game->addToEnvironment(guy2);
+	//game->addToEnvironment(guy2);
 	game->camera->setCenterObject(guy);
 	game->camera->setMovementOption("CENTER_OBJ");
+
+
+	Sprite* platform1 = game->createSprite(resPath + "platform_grass.png", 442, 233, 0, (guy->body.yPos + guy->body.height));
+	platform1->makeFrame(0, 0);
+	game->addToEnvironment(platform1);
+
+	Sprite* platform2 = game->createSprite(resPath + "platform_grass.png", 442, 233, 450, (guy->body.yPos + guy->body.height));
+	Mobile_Platform* mob_plat1 = new Mobile_Platform(platform2);
+	game->addToEnvironment(mob_plat1);
+
+	Uint32 collideEvent = 999999;
 
 	while (!game->isOver())
 	{
 		fps.start();
 		game->update();
-		if (physics.check_borders(guy))
-			guy->body.visible = false;
-			//guy->setPos(x, y);
 		//Render the scene
 		game->render();
+
+		if (game->physics->collide(guy, platform1, collideEvent))
+		{
+			game->getSoundManager().playEffect("collide");
+		}
 		while (fps.getTicks() < 1000 / FRAMES_PER_SECOND){}
 	}
 
