@@ -1,6 +1,7 @@
 #include "AI.h"
+#include <iostream>
 
-AI::AI(int* x, int* y)
+AI::AI(int x, int y)
 {
 	this->x = x;
 	this->y = y;
@@ -20,16 +21,16 @@ AI::~AI(void)
 
 /*AI::AI(unit* u)
 {
-	this->x = &u->x;
-	this->y = &u->y;
-	pacing = 0;
-	pace_reverse = false;
-	path_index = 0;
-	path_step = 0;
-	reverse_x = false;
-	reverse_y = false;
-	xrange = 0;
-	yrange = 0;
+this->x = &u->x;
+this->y = &u->y;
+pacing = 0;
+pace_reverse = false;
+path_index = 0;
+path_step = 0;
+reverse_x = false;
+reverse_y = false;
+xrange = 0;
+yrange = 0;
 }*/
 
 void AI::move(int x, int y)
@@ -83,7 +84,7 @@ void AI::update()
 		move_path();
 }
 
-void AI::set_target(int* x, int* y)
+void AI::set_target(int x, int y)
 {
 	targetx = x;
 	targety = y;
@@ -102,9 +103,16 @@ bool AI::target_range(int rangex, int rangey)
 {
 	if (rangex == 0 && rangey == 0)
 		return false;
-	return (abs(*targetx - *x) < rangex && abs(*targety - *y) < rangey);
+	return (abs(targetx - x) < rangex && abs(targety - y) < rangey);
 }
-
+int AI::getX()
+{
+	return x;
+}
+int AI::getY()
+{
+	return y;
+}
 void AI::flip_x()
 {
 	reverse_x = !reverse_x;
@@ -119,63 +127,63 @@ void AI::movex(int movementx)
 {
 	if (reverse_x == true)
 		movementx = -movementx;
-	*x += movementx;
+	x += movementx;
 }
 
 void AI::movey(int movementy)
 {
 	if (reverse_y == true)
 		movementy = -movementy;
-	*y += movementy;
+	y += movementy;
 }
 
 void AI::move_to_targetX(int speed)
 {
-	if (!(*targetx == *x && *targety == *y))
+	if (!(targetx == x && targety == y))
 	{
-	double tempx = *targetx - *x;
-	double tempy = *targety - *y;
-	double hypotenus = sqrt(tempx*tempx + tempy*tempy);
-	tempx = tempx / hypotenus;
-	tempx = tempx * speed;
-	int movementx;
-	if (tempx > 0)
-		movementx = ceil(tempx);
-	else
-		movementx = floor(tempx);
-	if (reverse_x == true)
-		movementx = -movementx;
-	*x += movementx;
+		double tempx = targetx - x;
+		double tempy = targety - y;
+		double hypotenus = sqrt(tempx*tempx + tempy*tempy);
+		tempx = tempx / hypotenus;
+		tempx = tempx * speed;
+		int movementx;
+		if (tempx > 0)
+			movementx = ceil(tempx);
+		else
+			movementx = floor(tempx);
+		if (reverse_x == true)
+			movementx = -movementx;
+		x += movementx;
 	}
 }
 
 void AI::move_to_target(int speed)
 {
-	if (!(*targetx == *x && *targety == *y))
+	if (!(targetx == x && targety == y))
 	{
-	double tempx = *targetx - *x;
-	double tempy = *targety - *y;
-	double hypotenus = sqrt(tempx*tempx + tempy*tempy);
-	tempx = tempx / hypotenus;
-	tempy = tempy / hypotenus;
-	tempx = tempx * speed;
-	tempy = tempy * speed;
-	int movementx;
-	int movementy;
-	if (tempx > 0)
-		movementx = ceil(tempx);
-	else
-		movementx = floor(tempx);
-	if (tempy > 0)
-		movementy = ceil(tempy);
-	else
-		movementy = floor(tempy);
-	if (reverse_x == true)
-		movementx = -movementx;
-	if (reverse_y == true)
-		movementy = -movementy;
-	*x += movementx;
-	*y += movementy;
+		double tempx = targetx - x;
+		double tempy = targety - y;
+		double hypotenus = sqrt(tempx*tempx + tempy*tempy);
+		tempx = tempx / hypotenus;
+		tempy = tempy / hypotenus;
+		tempx = tempx * speed;
+		tempy = tempy * speed;
+		int movementx;
+		int movementy;
+		if (tempx > 0)
+			movementx = ceil(tempx);
+		else
+			movementx = floor(tempx);
+		if (tempy > 0)
+			movementy = ceil(tempy);
+		else
+			movementy = floor(tempy);
+		if (reverse_x == true)
+			movementx = -movementx;
+		if (reverse_y == true)
+			movementy = -movementy;
+		x += movementx;
+		y += movementy;
 	}
 }
 
@@ -187,10 +195,10 @@ void AI::pacex(int speed, int steps)
 		pacing = 0;
 	}
 	if (pace_reverse == false)
-		*x += speed;
+		x += speed;
 	else
-		*x -= speed;
-	pacing+=1;
+		x -= speed;
+	pacing += 1;
 }
 
 void AI::pacey(int speed, int steps)
@@ -201,10 +209,10 @@ void AI::pacey(int speed, int steps)
 		pacing = 0;
 	}
 	if (pace_reverse == false)
-		*y += speed;
+		y += speed;
 	else
-		*y -= speed;
-	pacing+=1;
+		y -= speed;
+	pacing += 1;
 }
 
 void AI::move_path()
@@ -215,8 +223,8 @@ void AI::move_path()
 		movementx = -movementx;
 	if (reverse_y == true)
 		movementy = -movementy;
-	*x += movementx;
-	*y += movementy;
+	x += movementx;
+	y += movementy;
 	path_step += 1;
 	if (path_step > pathway[path_index].steps)
 	{

@@ -14,4 +14,5 @@ private:
 	int y;
 	Sprite* sprite;
 	Uint32 timer;
+	AI* ai;
 };

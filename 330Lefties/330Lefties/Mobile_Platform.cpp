@@ -1,10 +1,16 @@
 #pragma once
 #include "Mobile_Platform.h"
 
-Mobile_Platform::Mobile_Platform(Sprite* s, std::string seq)
+Mobile_Platform::Mobile_Platform(Sprite* s, std::string h)
 {
 	sprite = s;
-	currentseq = seq;
+	currentseq = h;
+	Unit::enableAI = true;
+	Unit::enablePhysics = true;
+	body.xPos = x;
+	body.yPos = y;
+	ai = Unit::createAI(x, y);
+	ai->patrol(10, 0, 60);
 }
 
 Mobile_Platform::~Mobile_Platform()
@@ -14,25 +20,20 @@ Mobile_Platform::~Mobile_Platform()
 
 void Mobile_Platform::update()
 {
-	if (timer < 10 || timer >= 30 && timer < 40)
-	{
-		sprite->movex(1);//right ten times
-		x++;
-	}
-	else if (timer >= 10 && timer < 30)
-	{
-		sprite->movex(-1);//left 20
-	}
-	else if (timer >= 40)
-	{
-		timer = 0;
-	}
-	timer++;
+	//do the thing: left and right
+	ai->update();
+	body.xPos = ai->getX();
+	body.yPos = ai->getY();
+	sprite->body.xPos = body.xPos;
+	sprite->body.yPos = body.yPos;
+	sprite->body.screenX = body.screenX;
+	sprite->body.screenY = body.screenY;
+	sprite->body.layer = body.layer;
 }
 
 void Mobile_Platform::render()
 {
-	sprite->show(currentseq);//currentseq is set to "" by default
+	sprite->render();
 }
 
 void Mobile_Platform::handleEvent(Uint32 e)

@@ -35,6 +35,7 @@ public:
 
 	//Set movement option.
 	void setMovementOption(MovementOption option);
+	void setMovementOption(std::string opt);
 
 	//Set camera offset.
 	void setOffset(int x, int y);

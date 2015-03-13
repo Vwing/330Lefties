@@ -4,7 +4,16 @@
 #include "res_path.h"
 #include "Globals.h"
 #include "Game.h"
+#include "SoundManager.h"
+#include "Timer.h"
+#include <ostream>
+#include "TextBoxResource.h"
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+const int LEVEL_WIDTH = 2560;
+const int LEVEL_HEIGHT = 1600;
+const int FRAMES_PER_SECOND = 60;
 
 void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1, int frame2, int frame3){
 	std::vector<int> moveFrames;
@@ -17,8 +26,6 @@ void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1,
 			sprite1->addFrameToSequence(sequence, frameNum, 2);
 }
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
 Sprite* MakeSprite(std::string resPath, Game* game)
 {
 	Sprite* sprite1 = game->createSprite(resPath + "Fey.png", 32, 32);
@@ -45,25 +52,35 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 	return sprite1;
 }
 
-bool vHeld = false;
-
-void handleEvent(Uint32 sdlEvent)
-{
-	if (sdlEvent == SDLK_v)
-	{
-		vHeld = true;
-	}
-}
+//bool vHeld = false;
+//
+//void handleEvent(Uint32 sdlEvent)
+//{
+//	if (sdlEvent == SDLK_v)
+//	{
+//		vHeld = true;
+//	}
+//}
 
 int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
 
+	Timer fps;
+
+	SoundManager* soundman = new SoundManager();
+	TextBoxResource *TextBoxResource = TextBoxResource::getInstance();
+
 	const std::string resPath = getResourcePath("SpriteDemo");
 
-	Sprite* spriteBG = game->createSprite(resPath + "Background.png", SCREEN_WIDTH, SCREEN_HEIGHT);
+	Sprite* spriteBG = game->createSprite(resPath + "Background2.png", LEVEL_WIDTH, LEVEL_HEIGHT);
 	spriteBG->body.layer = 2;
-	int bgFrame = spriteBG->makeFrame(0, 0);
+	spriteBG->makeFrame(0, 0);
+
+	soundman->setMusic(resPath + "loop1.wav");
+	soundman->playMusic();
+
+	TextBoxResource->loadFont(resPath + "SpecialElite.ttf", 30);
 
 	// game->setEnvironment(1000, SCREEN_HEIGHT);   (STILL DEBUGGING)
 	game->addToEnvironment(spriteBG);
@@ -78,8 +95,11 @@ int main(int argc, char **argv){
 	Sprite* sprite1 = MakeSprite(resPath, game);
 	Sprite* sprite2 = MakeSprite(resPath, game);
 
-	int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
-	int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
+	//int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
+	//int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
+	int x = 10;
+	int y = LEVEL_HEIGHT * 7 / 13;
+
 	sprite1->setPos(x, y);
 	sprite2->setPos(x + sprite2->body.width, y);
 	sprite1->changeSequence("walk up");
@@ -91,12 +111,15 @@ int main(int argc, char **argv){
 	game->addToEnvironment(guy);
 	game->addToEnvironment(guy2);
 	game->camera->setCenterObject(guy);
+	game->camera->setMovementOption("CENTER_OBJ");
 
 	while (!game->isOver())
 	{
+		fps.start();
 		game->update();
 		//Render the scene
 		game->render();
+		while (fps.getTicks() < 1000 / FRAMES_PER_SECOND){}
 	}
 
 
