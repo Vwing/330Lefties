@@ -45,15 +45,15 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 	return sprite1;
 }
 
-bool vHeld = false;
-
-void handleEvent(Uint32 sdlEvent)
-{
-	if (sdlEvent == SDLK_v)
-	{
-		vHeld = true;
-	}
-}
+//bool vHeld = false;
+//
+//void handleEvent(Uint32 sdlEvent)
+//{
+//	if (sdlEvent == SDLK_v)
+//	{
+//		vHeld = true;
+//	}
+//}
 
 int main(int argc, char **argv){
 
@@ -68,12 +68,12 @@ int main(int argc, char **argv){
 	// game->setEnvironment(1000, SCREEN_HEIGHT);   (STILL DEBUGGING)
 	game->addToEnvironment(spriteBG);
 
-	// Button won't listen for events properly.
-	Uint32 buttonDownEvent = 500;
-	Button* button = game->addButton(resPath + "button_states.png", buttonDownEvent, 200, 40);
-	button->onButtonUp(0, 0);
-	button->onButtonDown(0, 40);
-	button->onButtonOver(0, 80);
+	//// Button won't listen for events properly.
+	//Uint32 buttonDownEvent = 500;
+	//Button* button = game->addButton(resPath + "button_states.png", buttonDownEvent, 200, 40);
+	//button->onButtonUp(0, 0);
+	//button->onButtonDown(0, 40);
+	//button->onButtonOver(0, 80);
 
 	Sprite* sprite1 = MakeSprite(resPath, game);
 	Sprite* sprite2 = MakeSprite(resPath, game);

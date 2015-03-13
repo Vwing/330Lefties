@@ -35,6 +35,7 @@ public:
 
 	//Set movement option.
 	void setMovementOption(MovementOption option);
+	void setMovementOption(std::string opt);
 
 	//Set camera offset.
 	void setOffset(int x, int y);
@@ -50,7 +51,7 @@ public:
 	int getY();
 
 
-	void handleEvent(SDL_Event sdlEvent);
+	void handleEvent(Uint32 sdlEvent);
 	void update();
 	void render();
 
