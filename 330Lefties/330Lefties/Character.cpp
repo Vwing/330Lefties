@@ -77,6 +77,14 @@ void Character::jump(unsigned int distance){
 	currJumpDistance -= distance;
 }
 
+void Character::jump(unsigned int distance, bool left){
+	jumping = true;
+	body.yPos -= distance;
+	//sprite->movey(-1 * distance);
+	sprite->changeSequence(moveSeq.jump);
+	currJumpDistance -= distance;
+}
+
 void Character::fall(unsigned int distance){
 	jumping = false;
 	falling = true;

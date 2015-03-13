@@ -20,6 +20,7 @@ public:
 	void moveLeft(unsigned int distance);
 	void moveRight(unsigned int distance);
 	void jump(unsigned int distance);
+	void jump(unsigned int distance, bool left);
 	void fall(unsigned int distance);
 	void setPos(int x, int y);
 

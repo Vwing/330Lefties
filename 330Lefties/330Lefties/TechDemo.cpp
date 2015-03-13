@@ -122,6 +122,7 @@ int main(int argc, char **argv){
 	game->addToEnvironment(platform1);
 
 	Sprite* platform2 = game->createSprite(resPath + "platform_grass.png", 442, 233, 450, (guy->body.yPos + guy->body.height));
+	platform2->makeFrame(0, 0);
 	Mobile_Platform* mob_plat1 = new Mobile_Platform(platform2);
 	game->addToEnvironment(mob_plat1);
 
