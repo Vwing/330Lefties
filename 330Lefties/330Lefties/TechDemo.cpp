@@ -58,22 +58,18 @@ void handleEvent(Uint32 sdlEvent)
 int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
+
 	const std::string resPath = getResourcePath("SpriteDemo");
 
-	game->getSoundManager().setMusic(resPath + "loop1.wav");
-	game->getSoundManager().playMusic();
-	game->getSoundManager().createEffect("walk", resPath + "step1.wav");
-	game->getSoundManager().createEffect("collide", resPath + "collide.wav");
-
 	Sprite* spriteBG = game->createSprite(resPath + "Background.png", SCREEN_WIDTH, SCREEN_HEIGHT);
-	spriteBG->body.layer = 0;
+	spriteBG->body.layer = 2;
 	int bgFrame = spriteBG->makeFrame(0, 0);
 
 	// game->setEnvironment(1000, SCREEN_HEIGHT);   (STILL DEBUGGING)
 	game->addToEnvironment(spriteBG);
 
 	// Button won't listen for events properly.
-	Uint32 buttonDownEvent = 999999;
+	Uint32 buttonDownEvent = 500;
 	Button* button = game->addButton(resPath + "button_states.png", buttonDownEvent, 200, 40);
 	button->onButtonUp(0, 0);
 	button->onButtonDown(0, 40);
@@ -85,29 +81,22 @@ int main(int argc, char **argv){
 	int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
 	int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
 	sprite1->setPos(x, y);
-	sprite2->setPos(x + 2 * sprite2->body.width, y);
+	sprite2->setPos(x + sprite2->body.width, y);
 	sprite1->changeSequence("walk up");
 	sprite2->changeSequence("walk up");
 
 	Character* guy = new Character(sprite1, 100);
-	// Character* guy2 = new Character(sprite2, 100);
-	// Global_RegisterForEvent(guy2, SDLK_v);
+	Character* guy2 = new Character(sprite2, 100);
+	Global_RegisterForEvent(guy2, SDLK_v);
 	game->addToEnvironment(guy);
-	// game->addToEnvironment(guy2);
-	game->addToEnvironment(sprite2);
+	game->addToEnvironment(guy2);
 	game->camera->setCenterObject(guy);
 
-	Uint32 collideEvent = 999998;
 	while (!game->isOver())
 	{
 		game->update();
 		//Render the scene
 		game->render();
-
-		if (game->physics->collide(sprite2, guy, collideEvent))
-		{
-			game->getSoundManager().playEffect("collide");
-		}
 	}
 
 
