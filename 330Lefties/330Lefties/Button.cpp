@@ -6,34 +6,31 @@
 #include "SDL_image.h"
 #include "Button.h"
 #include "Sprite.h"
+#include "Globals.h"
 
-
-Button::Button(std::function<void(void)> functocall, Sprite* sprite)
+Button::Button(Sprite* sprite, Uint32 onDownEvent)
+: sprite(sprite), onDownEvent(onDownEvent)
 {
-	this->functocall = functocall;
-	this->sprite = sprite;
-	
 	currState = states.BUTTON_UP;
+
+	BUTTON_IS_OVER = false;
+	BUTTON_IS_DOWN = false;
+
+	Global_RegisterForEvent(this, SDL_MOUSEBUTTONUP);
+	Global_RegisterForEvent(this, SDL_MOUSEBUTTONDOWN);
 }
 
-void Button::onButtonDown(int frameNum){
-	states.BUTTON_DOWN = frameNum;
+// Show the frame made by xPos, yPos
+void Button::onButtonDown(int xPos, int yPos){
+	states.BUTTON_DOWN = sprite->makeFrame(xPos, yPos);
 }
-void Button::onButtonUp(int frameNum){
-	states.BUTTON_UP = frameNum;
+// Show the frame made by xPos, yPos
+void Button::onButtonUp(int xPos, int yPos){
+	states.BUTTON_UP = sprite->makeFrame(xPos, yPos);
 }
-void Button::onButtonOver(int frameNum){
-	states.BUTTON_OVER = frameNum;
-}
-
-int Button::getButtonDown(){
-	return states.BUTTON_DOWN;
-}
-int Button::getButtonUp(){
-	return states.BUTTON_UP;
-}
-int Button::getButtonOver(){
-	return states.BUTTON_OVER;
+// Show the frame made by xPos, yPos
+void Button::onButtonOver(int xPos, int yPos){
+	states.BUTTON_OVER = sprite->makeFrame(xPos, yPos);
 }
 
 //update() update whether the mouse is inside of the button space
@@ -41,14 +38,14 @@ void Button::update(){
 	int x, y;
 	SDL_GetMouseState(&x, &y);
 	
-	if (x > body.xPos && x < body.xPos + body.width && y > body.yPos && y < body.yPos + body.height)
+	if (x > sprite->body.xPos && x < sprite->body.xPos + sprite->body.width && y > sprite->body.yPos && y < sprite->body.yPos + sprite->body.height)
 	{
-		BUTTON_OVER = true;
+		BUTTON_IS_OVER = true;
 		currState = states.BUTTON_OVER;
 	}
-	else
+	else if (!BUTTON_IS_DOWN)
 	{
-		BUTTON_OVER = false;
+		BUTTON_IS_OVER = false;
 		currState = states.BUTTON_UP;
 	}
 }
@@ -61,13 +58,15 @@ void Button::render(){
 
 //handleEvent() could change the current frame being showed
 void Button::handleEvent(Uint32 sdlEvent){
-	if (BUTTON_OVER){
+	if (BUTTON_IS_OVER){
 		if (sdlEvent == SDL_MOUSEBUTTONUP){
 			currState = states.BUTTON_UP;
+			BUTTON_IS_DOWN = false;
 		}
 		else if (sdlEvent == SDL_MOUSEBUTTONDOWN){
 			currState = states.BUTTON_DOWN;
-			functocall();
+			BUTTON_IS_DOWN = true;
+			EventManager::getInstance().DispatchEvent(onDownEvent);
 		}
 	}
 }
