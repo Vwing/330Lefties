@@ -19,6 +19,7 @@ public:
 		int height;
 		int layer = 1;
 		std::string tag; //a tag identifying the type of object
+		bool visible = true;
 	};
 
 	Body body; // Contains position and dimensions of object

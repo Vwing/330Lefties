@@ -45,6 +45,9 @@ Camera::~Camera(void){
 }
 
 bool Camera::canSee(GameObject* obj){
+	if (!obj->body.visible)
+		return false;
+
 	//For the sake of code clarity.
 	Body& camera = body;
 	Body& object = obj->body;

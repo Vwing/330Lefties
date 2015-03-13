@@ -45,6 +45,12 @@ void Character::changeSequenceName(std::string movementType, std::string seq){
 	}
 }
 
+void Character::setPos(int x, int y)
+{
+	body.xPos = x;
+	body.yPos = y;
+}
+
 void Character::moveLeft(unsigned int distance){
 	body.xPos -= distance;
 	//sprite->movex(-1 * distance);

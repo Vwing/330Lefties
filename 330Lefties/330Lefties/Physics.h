@@ -7,7 +7,7 @@
 
 class Physics{
 public:
-	Physics(int worldHeight, int worldWidth)
+	Physics(int worldWidth, int worldHeight)
 		:WORLD_HEIGHT(worldHeight), WORLD_WIDTH(worldWidth)
 	{
 	}

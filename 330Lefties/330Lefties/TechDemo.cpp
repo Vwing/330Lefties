@@ -8,11 +8,12 @@
 #include "Timer.h"
 #include <ostream>
 #include "TextBoxResource.h"
+#include "Physics.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
-const int LEVEL_WIDTH = 2560;
-const int LEVEL_HEIGHT = 1600;
+const int WORLD_WIDTH = 2560;
+const int WORLD_HEIGHT = 1600;
 const int FRAMES_PER_SECOND = 60;
 
 void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1, int frame2, int frame3){
@@ -65,15 +66,14 @@ Sprite* MakeSprite(std::string resPath, Game* game)
 int main(int argc, char **argv){
 
 	Game* game = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, 500, 500);
-
 	Timer fps;
-
 	SoundManager* soundman = new SoundManager();
 	TextBoxResource *TextBoxResource = TextBoxResource::getInstance();
+	Physics physics(WORLD_WIDTH, WORLD_HEIGHT);
 
 	const std::string resPath = getResourcePath("SpriteDemo");
 
-	Sprite* spriteBG = game->createSprite(resPath + "Background2.png", LEVEL_WIDTH, LEVEL_HEIGHT);
+	Sprite* spriteBG = game->createSprite(resPath + "Background2.png", WORLD_WIDTH, WORLD_HEIGHT);
 	spriteBG->body.layer = 2;
 	spriteBG->makeFrame(0, 0);
 
@@ -98,7 +98,7 @@ int main(int argc, char **argv){
 	//int x = SCREEN_WIDTH / 2 - sprite1->body.width / 2;
 	//int y = SCREEN_HEIGHT / 2 - sprite1->body.height / 2;
 	int x = 10;
-	int y = LEVEL_HEIGHT * 7 / 13;
+	int y = WORLD_HEIGHT * 7 / 13;
 
 	sprite1->setPos(x, y);
 	sprite2->setPos(x + sprite2->body.width, y);
@@ -117,6 +117,9 @@ int main(int argc, char **argv){
 	{
 		fps.start();
 		game->update();
+		if (physics.check_borders(guy))
+			guy->body.visible = false;
+			//guy->setPos(x, y);
 		//Render the scene
 		game->render();
 		while (fps.getTicks() < 1000 / FRAMES_PER_SECOND){}
