@@ -23,21 +23,21 @@ public:
 	void render();
 	void handleEvent(Uint32 sdlEvent);
 
-	void setEnvironment(Environment *newEnv);
+	void setEnvironment(int newWorldWidth, int newWorldHeight);
 
 	bool isOver();
 	void quitGame();
 
 //	Sprite* addSprite(int width, int height, int xPos = 0, int yPos = 0);
 	Sprite* createSprite(std::string resPath, int width, int height, int xPos = 0, int yPos = 0);
+	Button* addButton(std::string resPath, Uint32 onDownEvent, int width, int height, int xPos = 0, int yPos = 0);
 	Unit* addToEnvironment(Unit* gameObject);
 	// Character* addCharacter(Sprite* sprite, int HP);  < This should be game programmer stuff
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 
-	UI* UI;
-	Camera *camera; // Controls what gets seen in the environment
+	Camera* camera; // Controls what gets seen in the environment
 	Physics* physics;
 
 private:
@@ -47,6 +47,7 @@ private:
 	int windowHeight, windowWidth;
 	bool quit;
 
+	UI* ui;
 	Environment *environment; // Contains all objects that are part of gameplay
 
 };

@@ -52,9 +52,12 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 	environment = new Environment(windowWidth, windowHeight);
 	camera = new Camera(windowWidth, windowHeight, environment);
 	physics = new Physics(windowWidth, windowHeight);
+	ui = new UI();
 
 	Global_RegisterForEvent(this, SDLK_ESCAPE);
 	Global_RegisterForEvent(this, SDL_WINDOWEVENT_CLOSE);
+	Global_RegisterForEvent(this, SDL_QUIT);
+	
 }
 
 Game::~Game()
@@ -66,14 +69,6 @@ Game::~Game()
 	Mix_Quit();
 }
 
-void Game::handleEvent(Uint32 sdlEvent)
-{
-	if (sdlEvent == SDLK_ESCAPE || sdlEvent == SDL_WINDOWEVENT_CLOSE)
-	{
-		quitGame();
-	}
-}
-
 void Game::update()
 {
 	EventManager::getInstance().Update();
@@ -83,7 +78,7 @@ void Game::update()
 	// Call update on all environment objects
 	environment->update();
 	// Call update on all UI objects
-	//UI->update(); //TechDemo: had to comment out for tech demo to compile
+	ui->update(); //TechDemo: had to comment out for tech demo to compile
 }
 
 void Game::render()
@@ -95,13 +90,22 @@ void Game::render()
 	camera->render();
 	
 	// Render all UI Elements
-	//UI->render(); //TechDemo: Same as above update() method
+	ui->render(); //TechDemo: Same as above update() method
 
 	SDL_RenderPresent(renderer);
 }
 
-void Game::setEnvironment(Environment *newEnv)
+void Game::handleEvent(Uint32 sdlEvent)
 {
+	if (sdlEvent == SDLK_ESCAPE || sdlEvent == SDL_WINDOWEVENT_CLOSE || sdlEvent == SDL_QUIT)
+	{
+		quit = true;
+	}
+}
+
+void Game::setEnvironment(int newWorldWidth, int newWorldHeight)
+{
+	Environment* newEnv = new Environment(newWorldWidth, newWorldHeight);
 	camera->setEnvironment(newEnv);
 	physics->set_world(newEnv->getWidth(), newEnv->getHeight());
 }
@@ -121,6 +125,12 @@ Sprite* Game::createSprite(std::string resPath, int width, int height, int xPos,
 {
 	Sprite* newSprite = new Sprite(resPath, renderer, width, height, xPos, yPos);
 	return newSprite;
+}
+
+Button* Game::addButton(std::string resPath, Uint32 onDownEvent, int width, int height, int xPos, int yPos)
+{
+	Sprite* buttonSprite = new Sprite(resPath, renderer, width, height, xPos, yPos, "BUTTON_UP");
+	return ui->addButton(buttonSprite, onDownEvent);
 }
 
 Unit* Game::addToEnvironment(Unit* gameObject){
