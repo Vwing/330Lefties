@@ -198,8 +198,8 @@ void Sprite::handleEvent(Uint32 sdlEvent){
 }
 
 void Sprite::update(){
-	//movex(Velocity.x);
-	//movey(Velocity.y);
+	movex(Velocity.x);
+	movey(Velocity.y);
 }
 
 void Sprite::render(){
