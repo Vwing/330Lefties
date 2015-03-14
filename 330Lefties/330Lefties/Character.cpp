@@ -76,7 +76,7 @@ void Character::jump(unsigned int distance){
 	//sprite->movey(-1 * distance);
 	sprite->changeSequence(moveSeq.jump);
 	currJumpDistance -= distance;
-	//Velocity.y = -1 * distance;
+	velocity.y = -1 * distance;
 }
 
 void Character::jump(unsigned int distance, bool left){
@@ -85,7 +85,7 @@ void Character::jump(unsigned int distance, bool left){
 	//sprite->movey(-1 * distance);
 	sprite->changeSequence(moveSeq.jump);
 	currJumpDistance -= distance;
-	//Velocity.y = -1 * distance;
+	velocity.y = -1 * distance;
 	if (left)
 		moveLeft(distance);
 	else

@@ -14,10 +14,10 @@ public:
 	void update();
 
 	//Add object to the environment.
-	void addObject(GameObject* obj);
+	void addObject(Unit* obj);
 
 	//Remove object from environment.
-	void removeObject(GameObject* obj);
+	void removeObject(Unit* obj);
 
 	//Get world height.
 	int getHeight();
@@ -27,7 +27,7 @@ public:
 
 	
 	//Vector of objects in the environment.
-	std::vector<GameObject*> objects;
+	std::vector<Unit*> objects;
 
 
 private:

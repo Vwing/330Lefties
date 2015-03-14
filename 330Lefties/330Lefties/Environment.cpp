@@ -22,8 +22,8 @@ void Environment::update(){
 	if (update_all){
 		for (int i=0; i<objects.size(); i++){
 			objects.at(i)->update();
-			if(objects[i].enablePhysics)
-				p->update(objects[i]);
+			if(objects[i]->enablePhysics)
+				physics->update(objects[i]);
 		}
 	}
 	else{
@@ -45,12 +45,12 @@ void Environment::update(){
 	
 }
 
-void Environment::addObject(GameObject* obj){
+void Environment::addObject(Unit* obj){
 	objects.push_back(obj);
 }
 
-void Environment::removeObject(GameObject* obj){
-	std::vector<GameObject*>::iterator it;
+void Environment::removeObject(Unit* obj){
+	std::vector<Unit*>::iterator it;
 	it = find(objects.begin(), objects.end(), obj);
 
 	if (it != objects.end()){

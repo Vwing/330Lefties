@@ -50,7 +50,7 @@ Game::Game(int windowWidth, int windowHeight, int xPos, int yPos)
 		higher than the window.
 	*/
 	physics = new Physics(windowWidth, windowHeight);
-	environment = new Environment(windowWidth, physics, windowHeight);
+	environment = new Environment(windowWidth, windowHeight, physics);
 	camera = new Camera(windowWidth, windowHeight, environment);
 	ui = new UI();
 
@@ -105,9 +105,9 @@ void Game::handleEvent(Uint32 sdlEvent)
 
 void Game::setEnvironment(int newWorldWidth, int newWorldHeight)
 {
-	Environment* newEnv = new Environment(newWorldWidth, newWorldHeight);
+	physics->set_world(newWorldWidth, newWorldHeight);
+	Environment* newEnv = new Environment(newWorldWidth, newWorldHeight, physics);
 	camera->setEnvironment(newEnv);
-	physics->set_world(newEnv->getWidth(), newEnv->getHeight());
 }
 
 Sprite* Game::createSprite(std::string resPath, int width, int height, int xPos, int yPos)
