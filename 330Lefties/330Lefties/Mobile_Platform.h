@@ -4,7 +4,6 @@
 class Mobile_Platform : public Platform
 {
 public:
-	
 	Mobile_Platform(Sprite* sp);
 	~Mobile_Platform();
 	void update();

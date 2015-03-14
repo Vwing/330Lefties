@@ -198,12 +198,8 @@ void Sprite::handleEvent(Uint32 sdlEvent){
 }
 
 void Sprite::update(){
-	if (!immovable)
-	{
-		movex(velocity.x);
-		movey(velocity.y);
-	}
-	
+	movex(velocity.x);
+	movey(velocity.y);
 }
 
 void Sprite::render(){

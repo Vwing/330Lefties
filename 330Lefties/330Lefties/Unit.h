@@ -16,10 +16,9 @@ public:
 	};
 
 	Velocity velocity;
-	
-	bool immovable = false;
+
 	bool enableAI = false;
-	bool enablePhysics = true;
+	bool enablePhysics = false;
 	AI* ai;
 	
 	void createAI()

@@ -27,13 +27,6 @@ void Mobile_Platform::update()
 	ai->update();
 	body.xPos = ai->getX();
 	body.yPos = ai->getY();
-	
-	if (!immovable)
-	{
-		body.xPos += velocity.x;
-		body.yPos += velocity.y;
-	}
-	
 	sprite->body.xPos = body.xPos;
 	sprite->body.yPos = body.yPos;
 	sprite->body.screenX = body.screenX;

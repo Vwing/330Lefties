@@ -45,16 +45,46 @@ public:
 
 		bool physicsEnabled = obj1->enablePhysics && obj2->enablePhysics;
 		//If any of the sides from 1 are outside of 2
-		if (bottom1 < top2 || top1 > bottom2 || right1 < left2 || left1 > right2)
+		if (bottom1 < top2)
 		{
 			return false;
 		}
-		else if (physicsEnabled) // If physics enabled, don't allow overlap
+		else if(physicsEnabled) // If physics enabled, don't allow overlap
 		{
-			obj1->body.yPos -= 5;
+			int diff = bottom1 - top2; 
+			obj1->body.yPos -= diff;
 			return true;
 		}
-		return true;
+		if (top1 > bottom2)
+		{
+			return false;
+		}
+		else if(physicsEnabled) // If physics enabled, don't allow overlap
+		{
+			int diff = bottom2 - top1; 
+			obj1->body.yPos += diff;
+			return true;
+		}
+		if(right1 < left2)
+		{
+			return false;
+		}
+		else if(physicsEnabled)
+		{
+			int diff = right1 - left2;
+			obj1->body.xPos -= diff;
+			return true;
+		}
+		if(left1 > right2)
+		{
+			return false;
+		}
+		else if(physicsEnabled)
+		{
+			int diff = right2 - left1;
+			obj1->body.xPos += diff;
+			return true;
+		}
 	}
 
 
