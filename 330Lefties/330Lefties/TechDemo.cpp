@@ -17,14 +17,17 @@ const int LEVEL_HEIGHT = 1600;
 const int FRAMES_PER_SECOND = 60;
 
 void helperAddMToMoveSequence(Sprite* sprite1, std::string sequence, int frame1, int frame2, int frame3){
-	std::vector<int> moveFrames;
-	moveFrames.clear();
-	moveFrames.push_back(frame1);
-	moveFrames.push_back(frame2);
-	moveFrames.push_back(frame3);
-	for (int frameNum : moveFrames)
-		for (int i = 0; i < 10; i++)
-			sprite1->addFrameToSequence(sequence, frameNum, 2);
+	//std::vector<int> moveFrames;
+	//moveFrames.clear();
+	//moveFrames.push_back(frame1);
+	//moveFrames.push_back(frame2);
+	//moveFrames.push_back(frame3);
+	//for (int frameNum : moveFrames)
+	//	for (int i = 0; i < 10; i++)
+	//		sprite1->addFrameToSequence(sequence, frameNum, 2);
+	sprite1->addFrameToSequence(sequence, frame1, 250);
+	sprite1->addFrameToSequence(sequence, frame2, 250);
+	sprite1->addFrameToSequence(sequence, frame3, 250);
 }
 
 Sprite* MakeSprite(std::string resPath, Game* game)

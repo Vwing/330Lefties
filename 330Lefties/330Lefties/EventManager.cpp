@@ -46,7 +46,7 @@ void EventManager::StartEventProcessing(){
 			cout << "was a key!!!!!!!!!!!!!!" << endl;
 		}
 		else if (e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP){
-			theEventEnum = e.button.button;//Left, Right
+			//theEventEnum = e.type;//Left, Right
 			cout << "Mouse click" << endl;
 		}
 		//else if (SDL_USEREVENT) <-- TODO!

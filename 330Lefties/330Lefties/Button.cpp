@@ -41,7 +41,7 @@ void Button::update(){
 	if (x > sprite->body.xPos && x < sprite->body.xPos + sprite->body.width && y > sprite->body.yPos && y < sprite->body.yPos + sprite->body.height)
 	{
 		BUTTON_IS_OVER = true;
-		currState = states.BUTTON_OVER;
+		currState = BUTTON_IS_DOWN ? states.BUTTON_DOWN : states.BUTTON_OVER;
 	}
 	else if (!BUTTON_IS_DOWN)
 	{
@@ -64,9 +64,8 @@ void Button::handleEvent(Uint32 sdlEvent){
 			BUTTON_IS_DOWN = false;
 		}
 		else if (sdlEvent == SDL_MOUSEBUTTONDOWN){
-			currState = states.BUTTON_DOWN;
+			//currState = states.BUTTON_DOWN;
 			BUTTON_IS_DOWN = true;
-			EventManager::getInstance().DispatchEvent(onDownEvent);
 		}
 	}
 }
