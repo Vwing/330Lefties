@@ -67,7 +67,6 @@ void SoundManager::playEffect(std::string sound_name)
 // Pause the sound effect - Will only pause the channel if sound is playing
 void SoundManager::pauseEffect(std::string sound_name)
 {
-	sounds[sound_name]->play(); // The effect must be playing on the channel for the channel to pause
 	sounds[sound_name]->pause();
 }
 
