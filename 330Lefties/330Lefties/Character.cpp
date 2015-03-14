@@ -13,6 +13,7 @@ Character::Character(Sprite* sprite, int startHP)
 	hp = startHP;
 	jumping = false;
 	falling = false;
+	enablePhysics = true;
 
 	moveSeq.left = "walk left";
 	moveSeq.right = "walk right";
@@ -70,27 +71,22 @@ void Character::moveRight(unsigned int distance){
 	sprite->changeSequence(moveSeq.right);
 }
 
-void Character::jump(unsigned int distance){
-	jumping = true;
-	//body.yPos -= distance;
-	//sprite->movey(-1 * distance);
+void Character::jump(unsigned int speed, unsigned int distance){
+	//jumping = true;
 	sprite->changeSequence(moveSeq.jump);
-	currJumpDistance -= distance;
-	velocity.y = -1 * distance;
+	velocity.y = -1 * speed;
+	maxJump = distance;
 }
-
-void Character::jump(unsigned int distance, bool left){
-	jumping = true;
-	//body.yPos -= distance;
-	//sprite->movey(-1 * distance);
-	sprite->changeSequence(moveSeq.jump);
-	currJumpDistance -= distance;
-	velocity.y = -1 * distance;
-	if (left)
-		moveLeft(distance);
-	else
-		moveRight(distance);
-}
+//
+//void Character::jump(unsigned int distance, bool left){
+//	//jumping = true;
+//	sprite->changeSequence(moveSeq.jump);
+//	velocity.y = -1 * distance;
+//	if (left)
+//		moveLeft(distance);
+//	else
+//		moveRight(distance);
+//}
 
 void Character::fall(unsigned int distance){
 	jumping = false;
@@ -105,46 +101,30 @@ void Character::handleEvent(Uint32 sdlEvent){
 	if (sdlEvent == SDLK_RIGHT)
 	{
 		moveRight(5);
-		if (!jumping && !falling)
+		//if (!jumping && !falling)
 			SoundManager::getInstance().playEffect("walk");
 	}
 	else if (sdlEvent == SDLK_LEFT)
 	{
 		moveLeft(5);
-		if (!jumping && !falling)
+		//if (!jumping && !falling)
 			SoundManager::getInstance().playEffect("walk");
 	}
 	else if (sdlEvent == SDLK_SPACE)
 	{
-		if (!jumping && !falling)
-			jump(10);
+		//if (!jumping && !falling)
+		
+			jump(10,30);
 	}
 }
 
 void Character::update(){
-	if (jumping)
+	if (!immovable)
 	{
-		if (currJumpDistance > 0)
-		{
-			//jump(3);
-		}
-		else
-		{
-			jumping = false;
-			falling = true;
-		}
+		body.xPos += velocity.x;
+		body.yPos += velocity.y;
 	}
-	else if (falling)
-	{
-		if (currJumpDistance < JUMP_DISTANCE)
-		{
-			fall(3);
-		}
-		else
-		{
-			falling = false;
-		}
-	}
+
 	sprite->body.xPos = body.xPos;
 	sprite->body.yPos = body.yPos;
 	sprite->body.screenX = body.screenX;

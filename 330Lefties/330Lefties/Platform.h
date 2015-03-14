@@ -8,6 +8,7 @@ class Platform : public Unit
 public:
 
 	bool enablePhysics = true;
+	bool immovable = true;
 	//Platform();
 	//~Platform();
 	virtual void update() = 0;
