@@ -194,9 +194,9 @@ void Camera::render() {
 		Get all the elements that can be seen by the Camera, then render them by layer.
 	*/
 
-	class CompareGameObjects{
+	class CompareUnits{
 	public:
-		bool operator()(GameObject* t1, GameObject* t2) //for use in a priority queue. Useful for rendering by layer.
+		bool operator()(Unit* t1, Unit* t2) //for use in a priority queue. Useful for rendering by layer.
 		{
 			if (t1->body.layer < t2->body.layer) return true;
 			else if (t1->body.layer == t2->body.layer && t1->body.width * t1->body.height < t2->body.width * t2->body.height)
@@ -204,9 +204,9 @@ void Camera::render() {
 			return false;
 		}
 	};
-	std::vector<GameObject*>& objects = environment->objects;
+	std::vector<Unit*>& objects = environment->objects;
 
-	std::priority_queue<GameObject*, std::vector<GameObject*>, CompareGameObjects> visible;
+	std::priority_queue<Unit*, std::vector<Unit*>, CompareUnits> visible;
 
 	for (int i=0; i<objects.size(); ++i){
 		if(canSee(objects.at(i))){
